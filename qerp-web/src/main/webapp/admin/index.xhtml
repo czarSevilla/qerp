@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>#{lbl['header.title']}</title>
+</h:head>
+<!-- Add 50px padding top to the body for the navbar -->
+<h:body style="padding-top: 50px; padding-bottom: 20px;">
+	<ui:composition template="../layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<b:container fluid="true">
+				<b:panel title="#{lbl['catalogues']}" collapsible="false">
+
+					<b:button value="#{lbl['job.title']}" outcome="cat/jobTitles.xhtml" size="lg"
+							icon-awesome="address-card" />
+
+					<b:button value="#{lbl['currency']}" outcome="cat/currencies.xhtml" size="lg"
+							icon-awesome="money" />
+
+					<b:button value="#{lbl['physicalRT']}" outcome="cat/prtypes.xhtml" size="lg"
+							icon-awesome="university" />
+
+					<b:button value="#{lbl['documentType']}" outcome="cat/documenttypes.xhtml" size="lg"
+							icon-awesome="file" />
+				</b:panel>
+			</b:container>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

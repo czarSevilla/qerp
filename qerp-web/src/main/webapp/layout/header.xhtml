@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+        <title>#{lbl['header.title']}</title>
+    </h:head>
+<h:body>
+	<ui:composition>
+		<h:form id="mainform">
+			<b:navBar brand="#{mainMB.brandTitle}" brandHref="#"
+				fixed="top" inverse="true">
+				<b:navbarLinks>
+					<b:navLink value="#{lbl['employees']}" href="#{request.contextPath}/modules/employees.xhtml" icon-awesome="group"></b:navLink>
+					<b:navLink value="#{lbl['payroll.incidents']}" href="#" icon-awesome="balance-scale" ></b:navLink>
+					<b:navLink value="#{lbl['physical.resources']}" href="#" icon-awesome="institution"></b:navLink>
+					<b:navLink value="#{lbl['administration']}" href="#{request.contextPath}/admin/index.xhtml" icon-awesome="sliders"></b:navLink>
+				</b:navbarLinks>
+				<b:navbarLinks styleClass="navbar-right">
+					<b:dropMenu value="" icon-awesome="user">
+						<b:navCommandLink actionListener="#{mainMB.changeToEsMx}"  >
+							<p:graphicImage library="img" name="mx.png" /> #{lbl['language.mx']}</b:navCommandLink>
+						<b:navCommandLink actionListener="#{mainMB.changeToEnUs}"  >
+							<p:graphicImage library="img" name="us.png" /> #{lbl['language.us']}</b:navCommandLink>
+						<b:navLink value="#{lbl['settings']}" href="#" icon-awesome="cog"></b:navLink>
+						<b:navLink value="#{lbl['singout']}" href="#" icon-awesome="sign-out"></b:navLink>
+					</b:dropMenu>
+				</b:navbarLinks>
+			</b:navBar>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

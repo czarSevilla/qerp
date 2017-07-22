@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>#{lbl['header.title']}</title>
+</h:head>
+<!-- Add 50px padding top to the body for the navbar -->
+<h:body style="padding-top: 50px; padding-bottom: 20px;">
+	<ui:composition template="../../layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<h:form id="form">
+			
+				<b:growl id="growMsg" globalOnly="true" placementFrom="top" showDetail="true" 
+					showSummary="true" allowDismiss="true" delay="10000" escape="false" />
+				
+				<b:modal title="#{jobTitleMB.actionTitle}" styleClass="modalSeudoClass">
+					<p:outputPanel id="jobTitleDetail">
+						<p:outputPanel rendered="#{not empty jobTitleMB.jobTitle}" >
+							<b:inputText label="#{lbl['title.es']}" value="#{jobTitleMB.jobTitle.titleEsMx}" ></b:inputText>	
+							<b:inputText label="#{lbl['title.en']}" value="#{jobTitleMB.jobTitle.titleEnUs}" ></b:inputText>	
+						</p:outputPanel>					
+					</p:outputPanel>
+					<f:facet name="footer">
+			            <b:button value="#{lbl['cancel']}" dismiss="modal" />
+			            <b:commandButton value="#{jobTitleMB.actionTitle}" look="primary" 
+			                actionListener="#{jobTitleMB.save}" update="form:list-items , form:growMsg" 
+			                oncomplete="$('.modalSeudoClass').modal('hide')" />
+			        </f:facet>
+				</b:modal>
+				
+				
+				<b:modal title="#{lbl['confirm']}" styleClass="confirmSeudoClass" size="small">
+					<p:outputPanel id="confirmDlg">
+						<p:outputPanel rendered="#{not empty jobTitleMB.idJobTitle}" >
+							<b:iconAwesome name="exclamation-triangle fa-fw" size="2x" />
+							<p:outputLabel value="#{lbl['sure.question']}" />
+						</p:outputPanel>					
+					</p:outputPanel>
+					<f:facet name="footer">
+			            <b:button value="#{lbl['cancel']}" dismiss="modal" />
+			            <b:commandButton actionListener="#{jobTitleMB.delete(jobTitleMB.idJobTitle)}"
+								value="#{lbl['delete']}" look="danger" title="#{lbl['delete']}" 
+								 update="form:list-items, form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" >
+							</b:commandButton>
+			        </f:facet>
+				</b:modal>
+							
+				
+				<b:container>
+					
+					<b:commandButton style="margin:20px 0;"
+						icon-awesome="plus" look="primary" value="#{lbl['create']}" title="#{lbl['create']}" size="md" actionListener="#{jobTitleMB.create}"
+						oncomplete="$('.modalSeudoClass').modal()" update="form" >
+						<f:setPropertyActionListener value="#{lbl['create']}" target="#{jobTitleMB.actionTitle}" />
+					</b:commandButton>
+					
+					<b:dataTable id="list-items" var="item" value="#{jobTitleMB.jobTitles}" >
+						<b:dataTableColumn value="#{item.idJobTitle}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['id']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn value="#{item.titleEsMx}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['title.es']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn value="#{item.titleEnUs}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['title.en']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn>
+							<f:facet name="header">
+								<h:outputLabel value="" />
+							</f:facet>
+							<b:commandButton 
+								icon-awesome="pencil" title="#{lbl['edit']}" size="xs" 
+								oncomplete="$('.modalSeudoClass').modal()" update="form" >
+								<f:setPropertyActionListener value="#{item}" target="#{jobTitleMB.jobTitle}" />
+								<f:setPropertyActionListener value="#{lbl['edit']}" target="#{jobTitleMB.actionTitle}" />
+							</b:commandButton>
+							
+							<b:commandButton 
+								icon-awesome="eraser" title="#{lbl['delete']}" size="xs" 
+								oncomplete="$('.confirmSeudoClass').modal()" update="form" >
+								<f:setPropertyActionListener value="#{item.idJobTitle}" target="#{jobTitleMB.idJobTitle}" />
+							</b:commandButton>
+						</b:dataTableColumn>
+					</b:dataTable>
+				</b:container>
+
+				
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

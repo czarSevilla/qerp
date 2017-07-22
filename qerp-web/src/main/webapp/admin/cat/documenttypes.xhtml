@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>#{lbl['header.title']}</title>
+</h:head>
+<!-- Add 50px padding top to the body for the navbar -->
+<h:body style="padding-top: 50px; padding-bottom: 20px;">
+	<ui:composition template="../../layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<h:form id="form">
+							
+				<b:growl id="growMsg" globalOnly="true" placementFrom="top" showDetail="true" 
+					showSummary="true" allowDismiss="true" delay="10000" escape="false" />
+		 		<b:modal title="#{not empty documentMB.document and not empty documentMB.document.idDocumentType ? lbl['edit'] : lbl['create']}" styleClass="modalSeudoClass" id="modalCurrency">
+					<p:outputPanel id="documentDetail">
+						<p:outputPanel rendered="#{not empty documentMB.document}" >
+							<b:inputText label="#{lbl['name.es']}" value="#{documentMB.document.nameEsMx}" ></b:inputText>	
+							<b:inputText label="#{lbl['name.en']}" value="#{documentMB.document.nameEnUs}" ></b:inputText>	
+						</p:outputPanel>					
+					</p:outputPanel>
+					<f:facet name="footer">
+			            <b:button value="#{lbl['cancel']}" dismiss="modal" />
+			            <b:commandButton value="#{not empty documentMB.document.idDocumentType ? lbl['edit'] : lbl['create']}" look="primary" 
+			                actionListener="#{documentMB.save}" update="form:items-list, form:growMsg"   oncomplete="$('.modalSeudoClass').modal('hide')" />
+			        </f:facet>
+				</b:modal> 
+
+				<b:modal title="#{lbl['confirm']}" styleClass="confirmSeudoClass" size="small">
+					<p:outputPanel id="confirmDlg">
+						<p:outputPanel rendered="#{not empty documentMB.idDocument}" >
+							<b:iconAwesome name="exclamation-triangle fa-fw" size="2x" />
+							<p:outputLabel value="#{lbl['sure.question']}" />
+						</p:outputPanel>					
+					</p:outputPanel>
+					<f:facet name="footer">
+			            <b:button value="#{lbl['cancel']}" dismiss="modal" />
+			            <b:commandButton actionListener="#{documentMB.delete(documentMB.idDocument)}"
+								value="#{lbl['delete']}" look="danger" title="#{lbl['delete']}" 
+								 update="form:items-list, form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" >
+						</b:commandButton>
+			        </f:facet>
+				</b:modal>
+				
+							            				
+							
+				
+				<b:container>
+					
+					<b:commandButton actionListener="#{documentMB.create}" style="margin:20px 0;"
+						icon-awesome="plus" title="#{lbl['create']}" size="md" look="primary" value="#{lbl['create']}"
+						oncomplete="$('.modalSeudoClass').modal()" update="form:documentDetail" >
+					</b:commandButton>
+					
+					<b:dataTable id="items-list" var="item" value="#{documentMB.documentsDto}" >
+						<b:dataTableColumn value="#{item.idDocumentType}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['id']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn value="#{item.nameEsMx}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['name.es']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn value="#{item.nameEnUs}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['name.en']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn>
+							<f:facet name="header">
+								<h:outputLabel value="" />
+							</f:facet>
+							<b:commandButton 
+								icon-awesome="pencil" title="#{lbl['edit']}" size="xs" 
+								oncomplete="$('.modalSeudoClass').modal()" update="form:documentDetail" >
+								<f:setPropertyActionListener value="#{item}" target="#{documentMB.document}" />
+							</b:commandButton>
+							
+							<b:commandButton 
+								icon-awesome="eraser" title="#{lbl['delete']}" size="xs" 
+								oncomplete="$('.confirmSeudoClass').modal()" update="form" >
+								<f:setPropertyActionListener value="#{item.idDocumentType}" target="#{documentMB.idDocument}" />
+							</b:commandButton>
+						</b:dataTableColumn>
+					</b:dataTable>
+				</b:container>
+
+				
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

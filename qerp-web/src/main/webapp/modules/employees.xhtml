@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>#{lbl['header.title']}</title>
+    </h:head>
+    <!-- Add 50px padding top to the body for the navbar -->
+    <h:body style="padding-top: 50px; padding-bottom: 20px;">
+    	<ui:composition template="../layout/commonLayout.xhtml">
+    		<ui:define name="content">
+    			<b:container fluid="true">
+    				<b:dataTable var="emp" value="#{employeeMB.employees}">
+    					<b:dataTableColumn>
+    						<f:facet name="header">
+    							<h:outputLabel value="" />
+    						</f:facet>
+    						<p:graphicImage library="img" name="profiles/#{emp.profilePicture}" width="50" height="60" />
+    					</b:dataTableColumn>
+    					<b:dataTableColumn value="#{emp.numberEmployee}">
+    						<f:facet name="header"><h:outputLabel value="#{lbl['number.employee']}" /></f:facet>
+    					</b:dataTableColumn>
+    					<b:dataTableColumn value="#{emp.name}">
+    						<f:facet name="header"><h:outputLabel value="#{lbl['name']}" /></f:facet>
+    					</b:dataTableColumn>
+    					<b:dataTableColumn value="#{emp.lastName}">
+    						<f:facet name="header"><h:outputLabel value="#{lbl['last.name']}" /></f:facet>
+    					</b:dataTableColumn>
+    					<b:dataTableColumn value="#{employeeMB.printJobTitle(emp)}">
+    						<f:facet name="header"><h:outputLabel value="#{lbl['job.title']}" /></f:facet>
+    					</b:dataTableColumn>    					
+    				</b:dataTable>    				
+    			</b:container>
+    		</ui:define>
+    	</ui:composition>
+    </h:body>
+</html>
