@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+</h:head>
+
+<h:body style="padding-top: 50px; padding-bottom: 20px;">
+	<ui:composition template="../layout/commonLayout.xhtml">
+		<ui:define name="content">
+<h:form id="form">
+
+				<b:modal title="#{lbl['specific.detail']}"  styleClass="confirmSeudoClass" size="small">
+					<p:outputPanel id="features">
+			<p:panelGrid columns="2" >
+				<p:graphicImage library="img" name="resources/#{physicalRMB.resource.pRType.picture}" width="80" height="80" />
+				<p:panelGrid columns="2" >
+
+					<p:outputLabel value="#{lbl['id']}" />
+					<p:outputLabel value="#{physicalRMB.resource.idPhysicalResource}" />
+
+					<p:outputLabel value="#{lbl['company']}" />
+					<p:outputLabel value="#{physicalRMB.resource.company.name}" />
+
+
+				</p:panelGrid>
+			</p:panelGrid>
+			<br/>
+
+
+							<p:panelGrid columns="2" >
+
+					<p:outputLabel value="Id:" />
+					<p:outputLabel value="valor1" />
+
+					<p:outputLabel value="Marca" />
+					<p:outputLabel value="valor2" />
+
+					<p:outputLabel value="Modelo:" />
+					<p:outputLabel value="valor3" />
+
+					<p:outputLabel value="Número de Serie" />
+					<p:outputLabel value="valor4" />
+				</p:panelGrid>
+
+
+
+					</p:outputPanel>
+
+				</b:modal>
+				
+			<p:panel id="panel">
+
+				<p:dataGrid var="item" value="#{physicalRMB.resources}" columns="3"
+					layout="grid" rows="12" paginator="true" id="container"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="6,12,16">
+
+					<f:facet name="header">
+						<p:outputLabel value="#{lbl['stocktaking']}" />
+					</f:facet>
+					
+						<p:panel header="#{physicalRMB.printType(item.pRType)}"
+							style="text-align:center">
+							<h:panelGrid columns="2" style="width:100%" border="2">
+								<p:graphicImage library="img" name="resources/#{item.pRType.picture}" width="80" height="80" />
+								<h:panelGrid columns="2" style="width:100%" border="2">
+									<p:outputLabel value="#{lbl['id.physical']}" />
+									<p:outputLabel value="#{item.idPhysicalResource}" />
+									<p:outputLabel value="#{lbl['name.company']}" />
+									<p:outputLabel value="#{item.company.name}" />
+									<b:commandButton icon-awesome="search" oncomplete="$('.confirmSeudoClass').modal()" update="form:features">
+										<f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
+									</b:commandButton>
+									<b:commandButton icon-awesome="pencil" oncomplete="$('.confirmSeudoClass').modal()" update="form:features">
+									</b:commandButton>
+									</h:panelGrid>
+								</h:panelGrid>
+						</p:panel>
+					
+				</p:dataGrid>
+
+			</p:panel>
+				
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+
+
+</html>

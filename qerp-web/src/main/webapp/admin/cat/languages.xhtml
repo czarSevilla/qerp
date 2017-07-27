@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>#{lbl['header.title']}</title>
+</h:head>
+<!-- Add 50px padding top to the body for the navbar -->
+<h:body style="padding-top: 50px; padding-bottom: 20px;">
+	<ui:composition template="../../layout/commonLayout.xhtml">
+		<ui:define name="content">
+			<h:form id="form">
+							
+				<b:growl id="growMsg" globalOnly="true" placementFrom="top" showDetail="true" 
+					showSummary="true" allowDismiss="true" delay="10000" escape="false" />
+		 		<b:modal title="#{not empty languageMB.language and not empty languageMB.language.idLanguage ? lbl['edit'] : lbl['create']}" styleClass="modalSeudoClass" id="modallanguage">
+					<p:outputPanel id="languageDetail">
+						<p:outputPanel rendered="#{not empty languageMB.language}" >
+							<b:inputText label="#{lbl['country.iso']}" value="#{languageMB.language.countryIso}" ></b:inputText>
+							<b:inputText label="#{lbl['lang.iso']}" value="#{languageMB.language.langIso}" ></b:inputText>
+							<b:inputText label="#{lbl['name.es']}" value="#{languageMB.language.nameEsMx}" ></b:inputText>	
+							<b:inputText label="#{lbl['name.en']}" value="#{languageMB.language.nameEnUs}" ></b:inputText>	
+						</p:outputPanel>					
+					</p:outputPanel>
+					<f:facet name="footer">
+			            <b:button value="#{lbl['cancel']}" dismiss="modal" />
+			            <b:commandButton value="#{not empty languageMB.language.idLanguage ? lbl['edit'] : lbl['create']}" look="primary" 
+			                actionListener="#{languageMB.save}" update="form:items-list, form:growMsg"   oncomplete="$('.modalSeudoClass').modal('hide')" />
+			        </f:facet>
+				</b:modal> 
+
+				<b:modal title="#{lbl['confirm']}" styleClass="confirmSeudoClass" size="small">
+					<p:outputPanel id="confirmDlg">
+						<p:outputPanel rendered="#{not empty languageMB.idLanguage}" >
+							<b:iconAwesome name="exclamation-triangle fa-fw" size="2x" />
+							<p:outputLabel value="#{lbl['sure.question']}" />
+						</p:outputPanel>					
+					</p:outputPanel>
+					<f:facet name="footer">
+			            <b:button value="#{lbl['cancel']}" dismiss="modal" />
+			            <b:commandButton actionListener="#{languageMB.delete(languageMB.idLanguage)}"
+								value="#{lbl['delete']}" look="danger" title="#{lbl['delete']}" 
+								 update="form:items-list, form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" >
+						</b:commandButton>
+			        </f:facet>
+				</b:modal>
+				
+							            				
+							
+				
+				<b:container>
+					
+					<b:commandButton actionListener="#{languageMB.create}" style="margin:20px 0;"
+						icon-awesome="plus" title="#{lbl['create']}" size="md" look="primary" value="#{lbl['create']}"
+						oncomplete="$('.modalSeudoClass').modal()" update="form:languageDetail" >
+					</b:commandButton>
+					
+					<b:dataTable id="items-list" var="item" value="#{languageMB.languages}" >
+						<b:dataTableColumn value="#{item.idLanguage}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['id']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn value="#{item.countryIso}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['country.iso']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn value="#{item.langIso}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['lang.iso']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn value="#{item.nameEsMx}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['name.es']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn value="#{item.nameEnUs}">
+							<f:facet name="header">
+								<h:outputLabel value="#{lbl['name.en']}" />
+							</f:facet>
+						</b:dataTableColumn>
+						<b:dataTableColumn>
+							<f:facet name="header">
+								<h:outputLabel value="" />
+							</f:facet>
+							<b:commandButton 
+								icon-awesome="pencil" title="#{lbl['edit']}" size="xs" 
+								oncomplete="$('.modalSeudoClass').modal()" update="form:languageDetail" >
+								<f:setPropertyActionListener value="#{item}" target="#{languageMB.language}" />
+							</b:commandButton>
+							
+							<b:commandButton 
+								icon-awesome="eraser" title="#{lbl['delete']}" size="xs" 
+								oncomplete="$('.confirmSeudoClass').modal()" update="form" >
+								<f:setPropertyActionListener value="#{item.idLanguage}" target="#{languageMB.idLanguage}" />
+							</b:commandButton>
+						</b:dataTableColumn>
+					</b:dataTable>
+				</b:container>
+
+				
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
