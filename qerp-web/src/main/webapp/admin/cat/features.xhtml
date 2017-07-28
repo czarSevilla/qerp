@@ -17,42 +17,38 @@
 							
 				<b:growl id="growMsg" globalOnly="true" placementFrom="top" showDetail="true" 
 					showSummary="true" allowDismiss="true" delay="10000" escape="false"   />
-		 		<b:modal  close-on-escape="false" backdrop="false" title="#{not empty companyMB.company and not empty companyMB.company.idCompany ? lbl['edit'] : lbl['create']}" styleClass="modalSeudoClass" id="modalcompany">
-					<p:outputPanel id="companyDetail">
-						<p:outputPanel rendered="#{not empty companyMB.company}" >
+		 		<b:modal  close-on-escape="false" backdrop="false" title="#{not empty resourceFeatureMB.feature and not empty resourceFeatureMB.feature.idResourceFeature ? lbl['edit'] : lbl['create']}" styleClass="modalSeudoClass" id="modalfeature">
+					<p:outputPanel id="featureDetail">
+						<p:outputPanel rendered="#{not empty resourceFeatureMB.feature}" >
 						
-						<b:selectOneMenu  value="#{companyMB.company.currencyDto.idCurrency}" required="true" label="#{lbl['currency']}" >
+
+        					<b:selectOneMenu  value="#{resourceFeatureMB.feature.type.idPhysicalResourceType}" required="true" label="#{lbl['language']}" >
 								<f:selectItem itemLabel="#{lbl['select']}" itemValue=""/>
-								<f:selectItems var="current" value="#{companyMB.currencies}" itemValue="#{current.idCurrency}" itemLabel="#{appMB.localize(current,'name')}"/>
+								<f:selectItems var="current" value="#{resourceFeatureMB.types}" itemLabel= "#{appMB.localize(current,'name')}" itemValue="#{current.idPhysicalResourceType}" />
         					</b:selectOneMenu>
         					
-        					<b:selectOneMenu  value="#{companyMB.company.languageDto.idLanguage}" required="true" label="#{lbl['language']}" >
-								<f:selectItem itemLabel="#{lbl['select']}" itemValue=""/>
-								<f:selectItems var="currentLanguage" value="#{companyMB.languages}" itemValue="#{currentLanguage.idLanguage}" itemLabel="#{appMB.localize(currentLanguage,'name')}"/>
-        					</b:selectOneMenu>
-
-							<b:inputText label="#{lbl['name.company']}" value="#{companyMB.company.name}" ></b:inputText>
-							<b:inputText label="#{lbl['prefix.company']}" value="#{companyMB.company.prefix}" ></b:inputText>
-							<h:inputHidden value="#{companyMB.company.idCompany}"/>		
+							<b:inputText label="#{lbl['name.company']}" value="#{resourceFeatureMB.feature.featureEnUs}" ></b:inputText>
+							<b:inputText label="#{lbl['name.company']}" value="#{resourceFeatureMB.feature.featureEsMx}" ></b:inputText>
+							
 						</p:outputPanel>					
 					</p:outputPanel>
 					<f:facet name="footer">
 			            <b:button value="#{lbl['cancel']}" dismiss="modal"  />
-			            <b:commandButton value="#{not empty companyMB.company.idCompany ? lbl['edit'] : lbl['create']}" look="primary" 
-			                actionListener="#{companyMB.save}" update="form:items-list, form:growMsg"   oncomplete="$('.modalSeudoClass').modal('hide')" />
+			            <b:commandButton value="#{not empty resourceFeatureMB.feature.idResourceFeature ? lbl['edit'] : lbl['create']}" look="primary" 
+			                actionListener="#{resourceFeatureMB.save}" update="form:items-list, form:growMsg"   oncomplete="$('.modalSeudoClass').modal('hide')" />
 			        </f:facet>
 				</b:modal> 
 
 				<b:modal title="#{lbl['confirm']}" styleClass="confirmSeudoClass" size="small"  >
 					<p:outputPanel id="confirmDlg">
-						<p:outputPanel rendered="#{not empty companyMB.idCompany}" >
+						<p:outputPanel rendered="#{not empty resourceFeatureMB.idResourceFeature}" >
 							<b:iconAwesome name="exclamation-triangle fa-fw" size="2x" />
 							<p:outputLabel value="#{lbl['sure.question']}" />
 						</p:outputPanel>					
 					</p:outputPanel>
 					<f:facet name="footer">
 			            <b:button value="#{lbl['cancel']}" dismiss="modal" />
-			            <b:commandButton actionListener="#{companyMB.delete(companyMB.idCompany)}"
+			            <b:commandButton actionListener="#{resourceFeatureMB.delete(resourceFeatureMB.idResourceFeature)}"
 								value="#{lbl['delete']}"  title="#{lbl['delete']}" 
 								 update="form:items-list, form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" >
 						</b:commandButton>
@@ -64,36 +60,25 @@
 				
 				<b:container>
 					
-					<b:commandButton actionListener="#{companyMB.create}" style="margin:20px 0;"
+					<b:commandButton actionListener="#{resourceFeatureMB.create}" style="margin:20px 0;"
 						icon-awesome="plus" title="#{lbl['create']}" size="md" look="primary" value="#{lbl['create']}"
 						oncomplete="$('.modalSeudoClass').modal()" update="form" >
 					</b:commandButton>
 					
-					<b:dataTable id="items-list" var="item" value="#{companyMB.companies}" >
-						<b:dataTableColumn value="#{item.idCompany}">
+					<b:dataTable id="items-list" var="item" value="#{resourceFeatureMB.features}" >
+						<b:dataTableColumn value="#{item.idResourceFeature}">
 							<f:facet name="header">
 								<h:outputLabel value="#{lbl['id']}" />
 							</f:facet>
 						</b:dataTableColumn>
-						
-						<b:dataTableColumn value="#{companyMB.printCurrency(item)}">
+						<b:dataTableColumn value= "#{appMB.localize(item.type,'name')}">
 							<f:facet name="header">
-								<h:outputLabel value="#{lbl['currency']}" />
+								<h:outputLabel value="#{lbl['name.feature']}" />
 							</f:facet>
 						</b:dataTableColumn>
-						<b:dataTableColumn value="#{companyMB.printLanguage(item)}">
+						<b:dataTableColumn value="#{appMB.localize(item,'feature')}">
 							<f:facet name="header">
-								<h:outputLabel value="#{lbl['language']}" />
-							</f:facet>
-						</b:dataTableColumn>
-						<b:dataTableColumn value="#{item.name}">
-							<f:facet name="header">
-								<h:outputLabel value="#{lbl['name.company']}" />
-							</f:facet>
-						</b:dataTableColumn>
-						<b:dataTableColumn value="#{item.prefix}">
-							<f:facet name="header">
-								<h:outputLabel value="#{lbl['prefix.company']}" />
+								<h:outputLabel value="#{lbl['prefix.feature']}" />
 							</f:facet>
 						</b:dataTableColumn>
 						<b:dataTableColumn>
@@ -102,14 +87,14 @@
 							</f:facet>
 							<b:commandButton 
 								icon-awesome="pencil" title="#{lbl['edit']}" size="xs" 
-								oncomplete="$('.modalSeudoClass').modal()" update="form:companyDetail"  actionListener="#{companyMB.findOne(item.idCompany)}" >
+								oncomplete="$('.modalSeudoClass').modal()" update="form:featureDetail"  actionListener="#{resourceFeatureMB.findOne(item.idResourceFeature)}" >
 								<f:ajax/>
 							</b:commandButton>
 							
 							<b:commandButton 
 								icon-awesome="eraser" title="#{lbl['delete']}" size="xs" 
 								oncomplete="$('.confirmSeudoClass').modal()" update="form" >
-								<f:setPropertyActionListener  value="#{item.idCompany}" target="#{companyMB.idCompany}" />
+								<f:setPropertyActionListener  value="#{item.idResourceFeature}" target="#{resourceFeatureMB.idResourceFeature}" />
 							</b:commandButton>
 						</b:dataTableColumn>
 					</b:dataTable>

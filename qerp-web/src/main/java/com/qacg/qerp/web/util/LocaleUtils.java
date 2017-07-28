@@ -7,7 +7,6 @@ import java.util.Locale;
 public class LocaleUtils {
 	
 	public static String localize(String attr, Object obj, Locale locale) {
-		System.out.println("esto llego"+ locale.getCountry());
 		String name = String.format("get%s%s", attr.substring(0, 1).toUpperCase(), attr.substring(1));
 		String lang = locale.getLanguage();
 		String methodName = null;

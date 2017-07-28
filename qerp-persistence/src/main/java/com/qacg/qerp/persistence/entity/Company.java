@@ -22,10 +22,8 @@ public class Company implements Serializable{
 	
 	
 	private Long idCompany;
-	//private Long idCurrency;
 	private Currency currency;
 	private Language language;
-	//private Long idLanguage;
 	private String name;
 	private String prefix;
 	
@@ -47,18 +45,7 @@ public class Company implements Serializable{
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
-	
-	
-	
-	
-	
-	/*@Column(name = "id_language", nullable =  false)
-	public Long getIdLanguage() {
-		return idLanguage;
-	}
-	public void setIdLanguage(Long idLanguage) {
-		this.idLanguage = idLanguage;
-	}*/
+
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_language", referencedColumnName = "id_language" )
