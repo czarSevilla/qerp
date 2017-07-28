@@ -22,13 +22,13 @@
 						<p:outputPanel rendered="#{not empty resourceFeatureMB.feature}" >
 						
 
-        					<b:selectOneMenu  value="#{resourceFeatureMB.feature.type.idPhysicalResourceType}" required="true" label="#{lbl['language']}" >
+        					<b:selectOneMenu  value="#{resourceFeatureMB.feature.type.idPhysicalResourceType}" required="true" label="#{lbl['name.feature']}" >
 								<f:selectItem itemLabel="#{lbl['select']}" itemValue=""/>
 								<f:selectItems var="current" value="#{resourceFeatureMB.types}" itemLabel= "#{appMB.localize(current,'name')}" itemValue="#{current.idPhysicalResourceType}" />
         					</b:selectOneMenu>
         					
-							<b:inputText label="#{lbl['name.company']}" value="#{resourceFeatureMB.feature.featureEnUs}" ></b:inputText>
-							<b:inputText label="#{lbl['name.company']}" value="#{resourceFeatureMB.feature.featureEsMx}" ></b:inputText>
+							<b:inputText label="#{lbl['feature.en']}" value="#{resourceFeatureMB.feature.featureEnUs}" ></b:inputText>
+							<b:inputText label="#{lbl['feature.es']}" value="#{resourceFeatureMB.feature.featureEsMx}" ></b:inputText>
 							
 						</p:outputPanel>					
 					</p:outputPanel>
@@ -78,7 +78,7 @@
 						</b:dataTableColumn>
 						<b:dataTableColumn value="#{appMB.localize(item,'feature')}">
 							<f:facet name="header">
-								<h:outputLabel value="#{lbl['prefix.feature']}" />
+								<h:outputLabel value="#{lbl['feature.feature']}" />
 							</f:facet>
 						</b:dataTableColumn>
 						<b:dataTableColumn>
