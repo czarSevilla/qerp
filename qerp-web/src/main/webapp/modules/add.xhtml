@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+        <title></title>
+    </h:head>
+<h:body>
+	<ui:composition>
+		<b:modal title="#{employeeMB.actionTitle}" styleClass="modalSeudoClass">
+			<p:outputPanel id="detail">
+				<p:outputPanel rendered="#{not empty employeeMB.employee}" >
+				    <b:inputText label="#{lbl['profile.picture']}" value="#{employeeMB.employee.profilePicture}" />
+					<b:inputText label="#{lbl['name']}" value="#{employeeMB.employee.name}" />	
+					<b:inputText label="#{lbl['last.name']}" value="#{employeeMB.employee.lastName}" /> 
+					<b:selectOneMenu value="#{employeeMB.employee.jobTitle.idJobTitle}" label="#{lbl['job.title']}">
+					   <f:selectItems value="#{employeeMB.jobTitles}" var="job" itemLabel="#{appMB.localize(job, 'title')}" itemValue="#{job.idJobTitle}" />
+					</b:selectOneMenu>
+				</p:outputPanel>					
+			</p:outputPanel>
+			<f:facet name="footer">
+	            <b:button value="#{lbl['cancel']}" dismiss="modal" />
+	            <b:commandButton value="#{employeeMB.actionTitle}" look="primary" 
+	                actionListener="#{employeeMB.save}" update="form:list-items , form:growMsg" 
+	                oncomplete="$('.modalSeudoClass').modal('hide')" >
+	               <f:ajax />
+	            </b:commandButton>
+	        </f:facet>
+		</b:modal>
+	</ui:composition>
+</h:body>
+</html>

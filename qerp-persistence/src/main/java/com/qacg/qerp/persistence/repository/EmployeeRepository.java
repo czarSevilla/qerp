@@ -1,12 +1,9 @@
 package com.qacg.qerp.persistence.repository;
 
-import java.util.List;
-
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.qacg.qerp.persistence.entity.Employee;
 
-public interface EmployeeRepository extends Repository<Employee, Long>  {
+public interface EmployeeRepository extends JpaRepository<Employee, Long>  {
 
-	List<Employee> findAll();
 }
