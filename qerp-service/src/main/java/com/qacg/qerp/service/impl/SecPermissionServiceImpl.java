@@ -28,7 +28,7 @@ public class SecPermissionServiceImpl implements SecPermissionService {
    @Override
    public List<SecPermissionDto> findAll() {
       List<SecPermission> list = secPermissionRepository.findAll();
-      return list.stream().map(p -> SecPermissionBuilder.build(p)).collect(Collectors.toList());
+      return list.stream().map(SecPermissionBuilder::build).collect(Collectors.toList());
    }
 
    @Transactional

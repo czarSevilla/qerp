@@ -49,7 +49,7 @@ public class SecRoleServiceImpl implements SecRoleService {
     @Override
     public List<SecRoleDto> findAll() {
         return secRoleRepository.findAll().stream()
-                .map(d -> SecRoleBuilder.build(d))
+                .map(SecRoleBuilder::build)
                 .collect(Collectors.toList());
     }
 
@@ -80,7 +80,7 @@ public class SecRoleServiceImpl implements SecRoleService {
             List<SecPermission> permissions = secPermissionRepository.findAllByIdSecModule(module.getIdSecModule());
             SecModuleDto dto = SecModuleBuilder.build(module);
             List<SecPermissionDto> permissionsDtos = permissions.stream()
-                    .map(p -> SecPermissionBuilder.build(p)).collect(Collectors.toList());
+                    .map(SecPermissionBuilder::build).collect(Collectors.toList());
             dto.setPermissions(permissionsDtos);
             dto.setSelected(new ArrayList<>());
             dtos.add(dto);

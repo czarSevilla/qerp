@@ -26,7 +26,7 @@ public class SecUserServiceImpl implements SecUserService {
     @Override
     public List<SecUserDto> findAll() {
         return secUserRepository.findAll().stream()
-                .map(d -> SecUserBuilder.build(d))
+                .map(SecUserBuilder::build)
                 .collect(Collectors.toList());
     }
 
