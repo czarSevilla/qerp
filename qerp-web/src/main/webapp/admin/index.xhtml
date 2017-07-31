@@ -33,6 +33,21 @@
 					<b:button value="#{lbl['feature']}" outcome="cat/features.xhtml" size="lg"
 							icon-awesome="puzzle-piece" />
 				</b:panel>
+				
+				<b:panel title="#{lbl['security']}" collapsible="false">
+
+                    <b:button value="#{lbl['modules']}" outcome="sec/modules.xhtml" size="lg"
+                            icon-awesome="th" />
+                            
+                    <b:button value="#{lbl['permissions']}" outcome="sec/permissions.xhtml" size="lg"
+                            icon-awesome="check-square-o" />
+                    
+                    <b:button value="#{lbl['roles']}" outcome="sec/roles.xhtml" size="lg"
+                            icon-awesome="sitemap" />
+                    
+                    <b:button value="#{lbl['users']}" outcome="sec/users.xhtml" size="lg"
+                            icon-awesome="users" />
+                </b:panel>
 			</b:container>
 		</ui:define>
 	</ui:composition>

@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:b="http://bootsfaces.net/ui" 
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>#{lbl['header.title']}</title>
+</h:head>
+<!-- Add 50px padding top to the body for the navbar -->
+<h:body style="padding-top: 50px; padding-bottom: 20px;">
+    <ui:composition template="../../layout/commonLayout.xhtml">
+        <ui:define name="content">
+            <h:form id="form">
+            
+                <b:growl id="growMsg" globalOnly="true" placementFrom="top" showDetail="true" 
+                    showSummary="true" allowDismiss="true" delay="10000" escape="false" />
+                    
+                <b:modal title="#{secUserMB.actionTitle}" styleClass="modalSeudoClass">
+                    <p:outputPanel id="detail">
+                        <p:outputPanel rendered="#{not empty secUserMB.dto}" >
+                            <h:inputHidden value="#{secUserMB.dto.idSecUser}" />
+                            <b:inputText label="#{lbl['user.name']}" value="#{secUserMB.dto.name}" ></b:inputText>    
+                            <b:inputText label="#{lbl['username']}" value="#{secUserMB.dto.secUsername}" ></b:inputText>    
+                            <b:inputText label="#{lbl['email']}" value="#{secUserMB.dto.email}" ></b:inputText>
+                            <b:selectBooleanCheckbox label="#{lbl['active']}" value="#{secUserMB.dto.active}" ></b:selectBooleanCheckbox>
+                            <b:selectBooleanCheckbox label="#{lbl['block']}" value="#{secUserMB.dto.block}" ></b:selectBooleanCheckbox>
+                        </p:outputPanel>                    
+                    </p:outputPanel>
+                    <f:facet name="footer">
+                        <b:button value="#{lbl['cancel']}" dismiss="modal" />
+                        <b:commandButton value="#{secUserMB.actionTitle}" look="primary" 
+                            actionListener="#{secUserMB.save}" update="form:list-items , form:growMsg" 
+                            oncomplete="$('.modalSeudoClass').modal('hide')" />
+                    </f:facet>
+                </b:modal>
+                
+                
+                <b:modal title="#{lbl['confirm']}" styleClass="confirmSeudoClass" size="small">
+                    <p:outputPanel id="confirmDlg">
+                        <p:outputPanel rendered="#{not empty secUserMB.dto}" >
+                            <b:iconAwesome name="exclamation-triangle fa-fw" size="2x" />
+                            <p:outputLabel value="#{lbl['sure.question']}" />
+                            <h:inputHidden value="#{secUserMB.id}" />
+                        </p:outputPanel>                    
+                    </p:outputPanel>
+                    <f:facet name="footer">
+                        <b:button value="#{lbl['cancel']}" dismiss="modal" />
+                        <b:commandButton actionListener="#{secUserMB.delete}"
+                                value="#{lbl['delete']}" look="danger" title="#{lbl['delete']}" 
+                                 update="form:list-items, form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" >
+                            </b:commandButton>
+                    </f:facet>
+                </b:modal>
+                
+                <b:container>
+                    <b:commandButton style="margin:20px 0;"
+                        icon-awesome="plus" look="primary" value="#{lbl['create']}" title="#{lbl['create']}" size="md" actionListener="#{secUserMB.create}"
+                        oncomplete="$('.modalSeudoClass').modal()" update="form" >
+                        <f:setPropertyActionListener value="#{lbl['create']}" target="#{secUserMB.actionTitle}" />
+                    </b:commandButton>
+                    
+                    <b:dataTable id="list-items" var="item" value="#{secUserMB.list}" >
+                        <b:dataTableColumn value="#{item.idSecUser}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['id']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn value="#{item.secUsername}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['username']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn value="#{item.name}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['user.name']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn value="#{item.email}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['email']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn value="#{item.active}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['active']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn value="#{item.block}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['block']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn>
+                            <f:facet name="header">
+                                <h:outputLabel value="" />
+                            </f:facet>
+                            <b:commandButton 
+                                icon-awesome="pencil" title="#{lbl['edit']}" size="xs" 
+                                oncomplete="$('.modalSeudoClass').modal()" update="form" >
+                                <f:setPropertyActionListener value="#{item}" target="#{secUserMB.dto}" />
+                                <f:setPropertyActionListener value="#{lbl['edit']}" target="#{secUserMB.actionTitle}" />
+                            </b:commandButton>
+                            
+                            <b:commandButton 
+                                icon-awesome="eraser" title="#{lbl['delete']}" size="xs" 
+                                oncomplete="$('.confirmSeudoClass').modal()" update="form" >
+                                <f:setPropertyActionListener value="#{item.idSecUser}" target="#{secUserMB.id}" />
+                            </b:commandButton>
+                        </b:dataTableColumn>
+                    </b:dataTable>
+                </b:container>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

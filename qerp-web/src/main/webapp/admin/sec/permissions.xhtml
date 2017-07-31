@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:b="http://bootsfaces.net/ui" 
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>#{lbl['header.title']}</title>
+</h:head>
+<!-- Add 50px padding top to the body for the navbar -->
+<h:body style="padding-top: 50px; padding-bottom: 20px;">
+    <ui:composition template="../../layout/commonLayout.xhtml">
+        <ui:define name="content">
+            <h:form id="form">
+            
+                <b:growl id="growMsg" globalOnly="true" placementFrom="top" showDetail="true" 
+                    showSummary="true" allowDismiss="true" delay="10000" escape="false" />
+                    
+                <b:modal title="#{secPermissionMB.actionTitle}" styleClass="modalSeudoClass">
+                    <p:outputPanel id="detail">
+                        <p:outputPanel rendered="#{not empty secPermissionMB.dto}" >
+                            <b:selectOneMenu label="#{lbl['module']}" value="#{secPermissionMB.dto.secModule.idSecModule}">
+                                <f:selectItems value="#{secPermissionMB.listModules}" var="module" itemLabel="#{appMB.localize(module, 'description')}" itemValue="#{module.idSecModule}" />
+                            </b:selectOneMenu>
+                            <b:inputText label="#{lbl['permission.key']}" value="#{secPermissionMB.dto.idSecPermission}" ></b:inputText>
+                            <b:inputText label="#{lbl['description.es']}" value="#{secPermissionMB.dto.descriptionEsMx}" ></b:inputText>    
+                            <b:inputText label="#{lbl['description.en']}" value="#{secPermissionMB.dto.descriptionEnUs}" ></b:inputText>   
+                            <b:inputText label="#{lbl['order']}" value="#{secPermissionMB.dto.order}" ></b:inputText> 
+                        </p:outputPanel>                    
+                    </p:outputPanel>
+                    <f:facet name="footer">
+                        <b:button value="#{lbl['cancel']}" dismiss="modal" />
+                        <b:commandButton value="#{secPermissionMB.actionTitle}" look="primary" 
+                            actionListener="#{secPermissionMB.save}" update="form:list-items , form:growMsg" 
+                            oncomplete="$('.modalSeudoClass').modal('hide')" />
+                    </f:facet>
+                </b:modal>
+                
+                
+                <b:modal title="#{lbl['confirm']}" styleClass="confirmSeudoClass" size="small">
+                    <p:outputPanel id="confirmDlg">
+                        <p:outputPanel rendered="#{not empty secPermissionMB.dto}" >
+                            <b:iconAwesome name="exclamation-triangle fa-fw" size="2x" />
+                            <p:outputLabel value="#{lbl['sure.question']}" />
+                            <h:inputHidden value="#{secPermissionMB.id}" />
+                        </p:outputPanel>                    
+                    </p:outputPanel>
+                    <f:facet name="footer">
+                        <b:button value="#{lbl['cancel']}" dismiss="modal" />
+                        <b:commandButton actionListener="#{secPermissionMB.delete}"
+                                value="#{lbl['delete']}" look="danger" title="#{lbl['delete']}" 
+                                 update="form:list-items, form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" >
+                            </b:commandButton>
+                    </f:facet>
+                </b:modal>
+                
+                <b:container>
+                    <b:commandButton style="margin:20px 0;"
+                        icon-awesome="plus" look="primary" value="#{lbl['create']}" title="#{lbl['create']}" size="md" actionListener="#{secPermissionMB.create}"
+                        oncomplete="$('.modalSeudoClass').modal()" update="form" >
+                        <f:setPropertyActionListener value="#{lbl['create']}" target="#{secPermissionMB.actionTitle}" />
+                    </b:commandButton>
+                    
+                    <b:dataTable id="list-items" var="item" value="#{secPermissionMB.list}" >
+                        <b:dataTableColumn value="#{appMB.localize(item.secModule, 'description')}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['module']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn value="#{item.idSecPermission}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['permission.key']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn value="#{item.descriptionEsMx}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['description.es']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn value="#{item.descriptionEnUs}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['description.en']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn value="#{item.order}">
+                            <f:facet name="header">
+                                <h:outputLabel value="#{lbl['order']}" />
+                            </f:facet>
+                        </b:dataTableColumn>
+                        <b:dataTableColumn>
+                            <f:facet name="header">
+                                <h:outputLabel value="" />
+                            </f:facet>
+                            <b:commandButton 
+                                icon-awesome="pencil" title="#{lbl['edit']}" size="xs" 
+                                oncomplete="$('.modalSeudoClass').modal()" update="form" >
+                                <f:setPropertyActionListener value="#{item}" target="#{secPermissionMB.dto}" />
+                                <f:setPropertyActionListener value="#{lbl['edit']}" target="#{secPermissionMB.actionTitle}" />
+                            </b:commandButton>
+                            
+                            <b:commandButton 
+                                icon-awesome="eraser" title="#{lbl['delete']}" size="xs" 
+                                oncomplete="$('.confirmSeudoClass').modal()" update="form" >
+                                <f:setPropertyActionListener value="#{item.idSecPermission}" target="#{secPermissionMB.id}" />
+                            </b:commandButton>
+                        </b:dataTableColumn>
+                    </b:dataTable>
+                </b:container>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
