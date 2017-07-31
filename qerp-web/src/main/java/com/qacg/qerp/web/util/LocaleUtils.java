@@ -6,6 +6,11 @@ import java.util.Locale;
 
 public class LocaleUtils {
 	
+   
+     private LocaleUtils(){
+        /*Default Constructor*/
+     }
+   
 	public static String localize(String attr, Object obj, Locale locale) {
 		String name = String.format("get%s%s", attr.substring(0, 1).toUpperCase(), attr.substring(1));
 		String lang = locale.getLanguage();

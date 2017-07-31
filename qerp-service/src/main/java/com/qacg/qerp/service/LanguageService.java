@@ -10,7 +10,7 @@ public interface LanguageService {
 	
 	List<LanguageDto> findAll();
 	
-	void save(LanguageDto LanguageDto) throws ServiceException;
+	void save(LanguageDto languageDto) throws ServiceException;
 	
 	void delete(Long idLanguage) throws ServiceException;
 }

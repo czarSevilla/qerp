@@ -30,6 +30,7 @@ public class CompanyManagedBean {
 	private Long idCurrency;
 	private CurrencyDto currency;
 	private LanguageDto language;
+	public static final String SUCCESS = "success.detail"; 
 	
 	@ManagedProperty("#{companyService}")
 	private CompanyService companyService;
@@ -185,7 +186,7 @@ public class CompanyManagedBean {
 		try{
 			companyService.save(company);
 			companies = companyService.findAll();
-			ctx.addMessage(null, MessageUtils.success(ctx, "success.detail"));
+			ctx.addMessage(null, MessageUtils.success(ctx, SUCCESS));
 		}catch(ServiceException se){
 			ctx.addMessage(null, MessageUtils.error(ctx, se.getMessage()));
 		}
@@ -197,7 +198,7 @@ public class CompanyManagedBean {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		try{
 			company = companyService.findOne(idCompany);
-			ctx.addMessage(null, MessageUtils.success(ctx, "success.detail"));
+			ctx.addMessage(null, MessageUtils.success(ctx, SUCCESS));
 		}catch(ServiceException se){
 			ctx.addMessage(null, MessageUtils.error(ctx, se.getMessage()));
 		
@@ -213,7 +214,7 @@ public class CompanyManagedBean {
 		try{
 			companyService.delete(idCompany);
 			companies = companyService.findAll();
-			ctx.addMessage(null, MessageUtils.success(ctx, "success.detail"));
+			ctx.addMessage(null, MessageUtils.success(ctx, SUCCESS));
 		}catch(ServiceException se){
 			ctx.addMessage(null, MessageUtils.error(ctx, se.getMessage()));
 		}
