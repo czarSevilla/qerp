@@ -1,95 +1,132 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:b="http://bootsfaces.net/ui"
+   xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
-    <title>#{lbl['header.title']}</title>
+
 </h:head>
 
 <h:body style="padding-top: 50px; padding-bottom: 20px;">
-	<ui:composition template="../layout/commonLayout.xhtml">
-		<ui:define name="content">
-<h:form id="form">
+   <ui:composition template="../layout/commonLayout.xhtml">
+      <ui:define name="content">
+         <h:form id="form">
 
-				<b:modal title="#{lbl['specific.detail']}"  styleClass="confirmSeudoClass" size="small">
-					<p:outputPanel id="features">
-			<p:panelGrid columns="2" >
-				<p:graphicImage library="img" name="resources/#{physicalRMB.resource.pRType.picture}" width="80" height="80" />
-				<p:panelGrid columns="2" >
+            <b:modal title="#{lbl['specific.detail']}" styleClass="confirmSeudoClass" size="small">
+               <p:outputPanel id="features">
+                  <p:panelGrid columns="2">
+                     <p:graphicImage library="img" name="resources/#{physicalRMB.resource.pRType.picture}" width="80" height="80" />
+                     <p:panelGrid columns="2">
 
-					<p:outputLabel value="#{lbl['id']}" />
-					<p:outputLabel value="#{physicalRMB.resource.idPhysicalResource}" />
+                        <p:outputLabel value="#{lbl['id']}" />
+                        <p:outputLabel value="#{physicalRMB.resource.idPhysicalResource}" />
 
-					<p:outputLabel value="#{lbl['company']}" />
-					<p:outputLabel value="#{physicalRMB.resource.company.name}" />
-
-
-				</p:panelGrid>
-			</p:panelGrid>
-			<br/>
+                        <p:outputLabel value="#{lbl['company']}" />
+                        <p:outputLabel value="#{physicalRMB.resource.company.name}" />
 
 
-							<p:panelGrid columns="2" >
-
-					<p:outputLabel value="Id:" />
-					<p:outputLabel value="valor1" />
-
-					<p:outputLabel value="Marca" />
-					<p:outputLabel value="valor2" />
-
-					<p:outputLabel value="Modelo:" />
-					<p:outputLabel value="valor3" />
-
-					<p:outputLabel value="Número de Serie" />
-					<p:outputLabel value="valor4" />
-				</p:panelGrid>
+                     </p:panelGrid>
+                  </p:panelGrid>
+                  <br />
 
 
+                  <b:dataTable value="#{physicalRMB.resource.features}" var="feature" paginated="false" searching="false" striped="true" info="false">
+                     <b:dataTableColumn value="#{appMB.localize(feature.resourceFeature,'feature')}">
+                        <f:facet name="header">
+                           <h:outputLabel value="Etiqueta de nombre" />
+                        </f:facet>
+                     </b:dataTableColumn>
+                     <b:dataTableColumn value="#{feature.value}">
+                        <f:facet name="header">
+                           <h:outputLabel value="Etiqueta de nombre" />
+                        </f:facet>
+                     </b:dataTableColumn>
+                  </b:dataTable>
+               </p:outputPanel>
 
-					</p:outputPanel>
+            </b:modal>
 
-				</b:modal>
-				
-			<p:panel id="panel">
 
-				<p:dataGrid var="item" value="#{physicalRMB.resources}" columns="3"
-					layout="grid" rows="12" paginator="true" id="container"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="6,12,16">
+            <b:modal title="#{not empty physicalRMB.resource and not empty physicalMB.resource.idPhysicalResource ? lbl['edit'] : lbl['create']}"
+               styleClass="modalSeudoClass">
+               <p:outputPanel id="physicalResourceDetail">
+                  <p:outputPanel rendered="#{not empty physicalRMB.resource}">
+                     <c:forEach items="#{physicalRMB.resource.features}" var="feature">
+                        <p:row>
+                           <p:column>
+                              <p:outputLabel value="#{appMB.localize(feature.resource,'feature')}" />
+                           </p:column>
+                           <p:column>
+                              <p:inputText value="#{feature.value}" />
+                           </p:column>
+                        </p:row>
+                     </c:forEach>
+                  </p:outputPanel>
+               </p:outputPanel>
+               <f:facet name="footer">
+                  <b:button value="#{lbl['cancel']}" dismiss="modal" />
+                  <b:commandButton value="#{not empty physicalRMB.resource and not empty physicalMB.resource.idPhysicalResource ? lbl['edit'] : lbl['create']}"
+                     look="primary" actionListener="#{physicalRMB.save}" update="panel" oncomplete="$('.modalSeudoClass').modal('hide')" />
+               </f:facet>
+            </b:modal>
 
-					<f:facet name="header">
-						<p:outputLabel value="#{lbl['stocktaking']}" />
-					</f:facet>
-					
-						<p:panel header="#{physicalRMB.printType(item.pRType)}"
-							style="text-align:center">
-							<h:panelGrid columns="2" style="width:100%" border="2">
-								<p:graphicImage library="img" name="resources/#{item.pRType.picture}" width="80" height="80" />
-								<h:panelGrid columns="2" style="width:100%" border="2">
-									<p:outputLabel value="#{lbl['id']}" />
-									<p:outputLabel value="#{item.idPhysicalResource}" />
-									<p:outputLabel value="#{lbl['name.company']}" />
-									<p:outputLabel value="#{item.company.name}" />
-									<b:commandButton icon-awesome="search" oncomplete="$('.confirmSeudoClass').modal()" update="form:features">
-										<f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
-									</b:commandButton>
-									<b:commandButton icon-awesome="pencil" oncomplete="$('.confirmSeudoClass').modal()" update="form:features">
-									</b:commandButton>
-									</h:panelGrid>
-								</h:panelGrid>
-						</p:panel>
-					
-				</p:dataGrid>
 
-			</p:panel>
-				
-			</h:form>
-		</ui:define>
-	</ui:composition>
+            <p:panel id="add">
+               <b:form>
+                  <p:panelGrid columns="2">
+
+                     <b:selectOneMenu value="#{physicalRMB.idType}" label="Physical Resource Type" id="combobox">
+                        <f:selectItem itemLabel="Choose an Option" itemValue="" />
+                        <f:selectItems value="#{physicalRMB.types}" var="typeV" itemLabel="#{appMB.localize(typeV,'name')}"
+                           itemValue="#{typeV.idPhysicalResourceType}" />
+                     </b:selectOneMenu>
+
+
+                     <b:commandButton style="margin:20px 0;" icon-awesome="plus" title="#{lbl['create']}" size="md" look="primary" value="#{lbl['create']}"
+                        actionListener="#{physicalRMB.create()}" update="etiqueta">
+                     </b:commandButton>
+                     <p:outputLabel value="#{physicalRMB.idType}" id="etiqueta" />
+
+
+                  </p:panelGrid>
+               </b:form>
+            </p:panel>
+
+            <p:panel id="panel">
+
+               <p:dataGrid var="item" value="#{physicalRMB.resources}" columns="3" layout="grid" rows="12" paginator="true" id="container"
+                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                  rowsPerPageTemplate="6,12,16">
+
+                  <f:facet name="header">
+                     <p:outputLabel value="#{lbl['stocktaking']}" />
+                  </f:facet>
+
+                  <p:panel header="#{physicalRMB.printType(item.pRType)}" style="text-align:center">
+                     <h:panelGrid columns="2" style="width:100%" border="2">
+                        <p:graphicImage library="img" name="resources/#{item.pRType.picture}" width="80" height="80" />
+                        <h:panelGrid columns="2" style="width:100%" border="2">
+                           <p:outputLabel value="#{lbl['id']}" />
+                           <p:outputLabel value="#{item.idPhysicalResource}" />
+                           <p:outputLabel value="#{lbl['name.company']}" />
+                           <p:outputLabel value="#{item.company.name}" />
+                           <b:commandButton icon-awesome="search" oncomplete="$('.confirmSeudoClass').modal()" update="form:features">
+                              <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
+                              <f:ajax />
+                           </b:commandButton>
+                           <b:commandButton icon-awesome="pencil" oncomplete="$('.confirmSeudoClass').modal()" update="form:features">
+                           </b:commandButton>
+                        </h:panelGrid>
+                     </h:panelGrid>
+                  </p:panel>
+
+               </p:dataGrid>
+
+            </p:panel>
+
+         </h:form>
+      </ui:define>
+   </ui:composition>
 </h:body>
 
 
