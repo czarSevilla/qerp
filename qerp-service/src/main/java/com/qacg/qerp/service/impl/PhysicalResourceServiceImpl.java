@@ -14,27 +14,20 @@ import com.qacg.qerp.model.dto.PhysicalResourceDto;
 import com.qacg.qerp.model.dto.PhysicalResourceHasFeatureDto;
 import com.qacg.qerp.model.dto.PhysicalResourceTypeDto;
 import com.qacg.qerp.model.dto.ResourceFeatureDto;
+import com.qacg.qerp.persistence.entity.Company;
 import com.qacg.qerp.persistence.entity.PhysicalResource;
 import com.qacg.qerp.persistence.entity.PhysicalResourceHasFeature;
+import com.qacg.qerp.persistence.entity.PhysicalResourceType;
 import com.qacg.qerp.persistence.entity.ResourceFeature;
 import com.qacg.qerp.persistence.repository.PhysicalResourceRepository;
-import com.qacg.qerp.persistence.repository.PhysicalResourceTypeRepository;
 import com.qacg.qerp.service.PhysicalResourceService;
 
 @Service("physicalRService")
 public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 
 	private PhysicalResourceRepository physicalResourceRepository;
-	private PhysicalResourceTypeRepository physicalResourceTypeRepository;
-	
 
 	
-	
-	@Autowired
-	public void setPhysicalResourceTypeRepository(PhysicalResourceTypeRepository physicalResourceTypeRepository) {
-		this.physicalResourceTypeRepository = physicalResourceTypeRepository;
-	}
-
 
 
 	@Autowired
@@ -78,15 +71,28 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 	public void save(PhysicalResourceDto physicalDto) throws ServiceException {
 		PhysicalResource physicalResource = new PhysicalResource();
 		List<PhysicalResourceHasFeature> features = new ArrayList<>();
+		Company company = new Company();
+		PhysicalResourceType type = new PhysicalResourceType(); 
+		BeanUtils.copyProperties(physicalDto.getpRType(), type);
+		Long idType= physicalDto.getIdPhysicalResource();
+		if(null==physicalDto.getpRType().getIdPhysicalResourceType()){
+		   
+		   physicalResource = physicalResourceRepository.findOne(idType);
+		   type.setIdPhysicalResourceType(physicalResource.getpRType().getIdPhysicalResourceType());
+		}
 		for(PhysicalResourceHasFeatureDto featureItem : physicalDto.getFeatures()){
 			PhysicalResourceHasFeature item = new  PhysicalResourceHasFeature();
 			ResourceFeature resourceFeature = new ResourceFeature();
 			BeanUtils.copyProperties(featureItem.getResourceFeature(), resourceFeature);
 			BeanUtils.copyProperties(featureItem, item);
 			item.setResourceFeature(resourceFeature);
+			item.setPhysicalResource(physicalResource);
 			features.add(item);
 		}
+		company.setIdCompany(1L);
+		physicalResource.setpRType(type);
 		physicalResource.setFeatures(features);
+		physicalResource.setCompany(company);
 		try {
 			physicalResourceRepository.save(physicalResource);
 		} catch (DataAccessException ex) {
@@ -106,21 +112,5 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 		
 	}
 
-
-/*
-	@Override
-	public List<PhysicalResourceHasFeatureDto> findAllFeatures(Long idPhysicalResource) {
-		List<PhysicalResourceHasFeatureDto> featuresDto = new ArrayList<>();
-		List<PhysicalResourceHasFeature> features = new ArrayList<>();
-		for(PhysicalResourceHasFeature feature : features){
-			PhysicalResourceHasFeatureDto featureDto = new PhysicalResourceHasFeatureDto();
-			ResourceFeatureDto resourceFeatureDTo = new ResourceFeatureDto();
-			
-		}
-		return null;
-	}*/
-
-
-	
 	
 }

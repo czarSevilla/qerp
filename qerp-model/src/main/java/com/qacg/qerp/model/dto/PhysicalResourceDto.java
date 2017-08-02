@@ -1,6 +1,7 @@
 package com.qacg.qerp.model.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicalResourceDto implements Serializable {
@@ -16,6 +17,12 @@ public class PhysicalResourceDto implements Serializable {
 	private PhysicalResourceTypeDto pRType;
 	private List<PhysicalResourceHasFeatureDto> features;
 	
+	public PhysicalResourceDto(){
+	   company = new CompanyDto();
+	   pRType = new PhysicalResourceTypeDto();
+	   features = new ArrayList<>();
+	   
+	}
 	
 	public Long getIdPhysicalResource() {
 		return idPhysicalResource;

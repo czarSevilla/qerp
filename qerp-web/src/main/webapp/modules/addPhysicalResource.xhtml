@@ -7,21 +7,26 @@
 </h:head>
 <h:body>
    <ui:composition>
-      <b:modal title="#{lbl['create']}" styleClass="modalToAddSeudoClass">
-         <b:form>
-            <p:outputPanel id="addPhysicalResourceDetail">
-               <c:forEach items="#{physicalRMB.resource.features}" var="feature">
-                        <p:row>
-                           <p:column>
-                              <p:outputLabel value="#{appMB.localize(feature.resourceFeature,'feature')}" />
-                           </p:column>
-                           <p:column>
-                              <p:inputText value="#{feature.value}" />
-                           </p:column>
-                        </p:row>
-                     </c:forEach>
-            </p:outputPanel>
-         </b:form>
+      <b:modal title="#{lbl['create']}" styleClass="modalToAddSeudoClass" id="modal">
+         <p:outputPanel id="addPhysicalResourceDetail">
+            <b:dataTable value="#{physicalRMB.resource.features}" var="feature" paginated="false" searching="false" striped="true" info="false">
+               <b:dataTableColumn value="#{appMB.localize(feature.resourceFeature,'feature')}">
+                  <f:facet name="header">
+                     <h:outputLabel value="Etiqueta de nombre" />
+                  </f:facet>
+               </b:dataTableColumn>
+               <b:dataTableColumn>
+                  <b:inputText value="#{feature.value}"/>
+                  <f:facet name="header">
+                     <h:outputLabel value="Etiqueta de nombre" />
+                  </f:facet>
+               </b:dataTableColumn>
+            </b:dataTable>
+            <b:commandButton value="#{lbl['create']}" look="primary" actionListener="#{physicalRMB.save}"
+               update="form:panel" oncomplete="$('.modalToAddSeudoClass').modal('hide')" />
+
+         
+         </p:outputPanel>
       </b:modal>
    </ui:composition>
 </h:body>

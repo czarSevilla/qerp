@@ -87,10 +87,12 @@ public class ResourceFeatureServiceImpl implements ResourceFeatureService {
    public PhysicalResourceDto findAllById(Long idType) throws ServiceException {
       PhysicalResourceDto physicalResource = new PhysicalResourceDto();
       PhysicalResourceType type = new PhysicalResourceType();
+      PhysicalResourceTypeDto typeDto = new PhysicalResourceTypeDto();
       type.setIdPhysicalResourceType(idType);
       List<PhysicalResourceHasFeatureDto> featuresDto = new ArrayList<>();
       List<ResourceFeature> features = resourceFeatureRepository.findAllByType(type);
       
+      BeanUtils.copyProperties(type, typeDto);
       for(ResourceFeature feature : features){
          ResourceFeatureDto featureDTo = new ResourceFeatureDto();
          PhysicalResourceHasFeatureDto hasFeatureDto= new PhysicalResourceHasFeatureDto();
@@ -98,6 +100,7 @@ public class ResourceFeatureServiceImpl implements ResourceFeatureService {
          hasFeatureDto.setResourceFeature(featureDTo);
          featuresDto.add(hasFeatureDto);
       }
+      physicalResource.setpRType(typeDto);
       physicalResource.setFeatures(featuresDto);
       return physicalResource;
    }

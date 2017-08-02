@@ -11,25 +11,19 @@
    <ui:composition template="../layout/commonLayout.xhtml">
       <ui:define name="content">
          <h:form id="form">
-            <ui:include src="addPhysicalResource.xhtml" />
-            <b:modal title="#{lbl['specific.detail']}" styleClass="confirmSeudoClass" size="small">
+         
+            <b:modal title="#{lbl['specific.detail']}" styleClass="viewSeudoClass" size="small">
                <p:outputPanel id="features">
                   <p:panelGrid columns="2">
                      <p:graphicImage library="img" name="resources/#{physicalRMB.resource.pRType.picture}" width="80" height="80" />
                      <p:panelGrid columns="2">
-
                         <p:outputLabel value="#{lbl['id']}" />
                         <p:outputLabel value="#{physicalRMB.resource.idPhysicalResource}" />
-
                         <p:outputLabel value="#{lbl['company']}" />
                         <p:outputLabel value="#{physicalRMB.resource.company.name}" />
-
-
                      </p:panelGrid>
                   </p:panelGrid>
                   <br />
-
-
                   <b:dataTable value="#{physicalRMB.resource.features}" var="feature" paginated="false" searching="false" striped="true" info="false">
                      <b:dataTableColumn value="#{appMB.localize(feature.resourceFeature,'feature')}">
                         <f:facet name="header">
@@ -43,36 +37,13 @@
                      </b:dataTableColumn>
                   </b:dataTable>
                </p:outputPanel>
-
             </b:modal>
 
-
-            <b:modal title="#{not empty physicalRMB.resource and not empty physicalMB.resource.idPhysicalResource ? lbl['edit'] : lbl['create']}"
-               styleClass="modalSeudoClass">
-               <p:outputPanel id="physicalResourceDetail">
-                  <p:outputPanel rendered="#{not empty physicalRMB.resource}">
-                     <c:forEach items="#{physicalRMB.resource.features}" var="feature">
-                        <p:row>
-                           <p:column>
-                              <p:outputLabel value="#{appMB.localize(feature.resourceFeature,'feature')}" />
-                           </p:column>
-                           <p:column>
-                              <p:inputText value="#{feature.value}" />
-                           </p:column>
-                        </p:row>
-                     </c:forEach>
-                  </p:outputPanel>
-               </p:outputPanel>
-               <f:facet name="footer">
-                  <b:button value="#{lbl['cancel']}" dismiss="modal" />
-                  <b:commandButton value="#{not empty physicalRMB.resource and not empty physicalMB.resource.idPhysicalResource ? lbl['edit'] : lbl['create']}"
-                     look="primary" actionListener="#{physicalRMB.save}" update="panel" oncomplete="$('.modalSeudoClass').modal('hide')" />
-               </f:facet>
-            </b:modal>
 
 
             <p:panel id="add">
-               <b:form>
+               <b:form id="formAdd">
+                  <ui:include src="addPhysicalResource.xhtml" />
                   <p:panelGrid columns="2">
 
                      <b:selectOneMenu value="#{physicalRMB.idType}" label="Physical Resource Type" id="combobox">
@@ -83,11 +54,8 @@
 
 
                      <b:commandButton style="margin:20px 0;" icon-awesome="plus" title="#{lbl['create']}" size="md" look="primary" value="#{lbl['create']}"
-                        actionListener="#{physicalRMB.create()}" update="etiqueta" oncomplete="$('.modalToAddSeudoClass').modal()">
+                        actionListener="#{physicalRMB.create()}" update="formAdd:addPhysicalResourceDetail" oncomplete="$('.modalToAddSeudoClass').modal()">
                      </b:commandButton>
-                     <p:outputLabel value="#{physicalRMB.idType}" id="etiqueta" />
-
-
                   </p:panelGrid>
                </b:form>
             </p:panel>
@@ -110,12 +78,15 @@
                            <p:outputLabel value="#{item.idPhysicalResource}" />
                            <p:outputLabel value="#{lbl['name.company']}" />
                            <p:outputLabel value="#{item.company.name}" />
-                           <b:commandButton icon-awesome="search" oncomplete="$('.confirmSeudoClass').modal()" update="form:features">
+
+                           <b:commandButton icon-awesome="search" oncomplete="$('.viewSeudoClass').modal()" update="form:features">
                               <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
                               <f:ajax />
                            </b:commandButton>
-                           <b:commandButton icon-awesome="pencil" oncomplete="$('.confirmSeudoClass').modal()" update="form:features">
+                           <b:commandButton icon-awesome="pencil" oncomplete="$('.modalToAddSeudoClass').modal()" update ="form:formAdd:addPhysicalResourceDetail" >
+                              <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />                              
                            </b:commandButton>
+
                         </h:panelGrid>
                      </h:panelGrid>
                   </p:panel>
