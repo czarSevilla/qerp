@@ -3,7 +3,9 @@ package com.qacg.qerp.service;
 import java.util.List;
 
 import com.qacg.qerp.exception.ServiceException;
+import com.qacg.qerp.model.dto.PhysicalResourceDto;
 import com.qacg.qerp.model.dto.ResourceFeatureDto;
+import com.qacg.qerp.persistence.entity.ResourceFeature;
 
 public interface ResourceFeatureService {
 
@@ -14,5 +16,6 @@ public interface ResourceFeatureService {
    void delete(Long idResourceFeature) throws ServiceException;
 
    ResourceFeatureDto findOne(Long idResourceFeature) throws ServiceException;
-
+   
+   PhysicalResourceDto findAllById(Long idType) throws ServiceException;
 }

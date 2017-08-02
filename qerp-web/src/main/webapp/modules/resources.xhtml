@@ -11,7 +11,7 @@
    <ui:composition template="../layout/commonLayout.xhtml">
       <ui:define name="content">
          <h:form id="form">
-
+            <ui:include src="addPhysicalResource.xhtml" />
             <b:modal title="#{lbl['specific.detail']}" styleClass="confirmSeudoClass" size="small">
                <p:outputPanel id="features">
                   <p:panelGrid columns="2">
@@ -54,7 +54,7 @@
                      <c:forEach items="#{physicalRMB.resource.features}" var="feature">
                         <p:row>
                            <p:column>
-                              <p:outputLabel value="#{appMB.localize(feature.resource,'feature')}" />
+                              <p:outputLabel value="#{appMB.localize(feature.resourceFeature,'feature')}" />
                            </p:column>
                            <p:column>
                               <p:inputText value="#{feature.value}" />
@@ -83,7 +83,7 @@
 
 
                      <b:commandButton style="margin:20px 0;" icon-awesome="plus" title="#{lbl['create']}" size="md" look="primary" value="#{lbl['create']}"
-                        actionListener="#{physicalRMB.create()}" update="etiqueta">
+                        actionListener="#{physicalRMB.create()}" update="etiqueta" oncomplete="$('.modalToAddSeudoClass').modal()">
                      </b:commandButton>
                      <p:outputLabel value="#{physicalRMB.idType}" id="etiqueta" />
 

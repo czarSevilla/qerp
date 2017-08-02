@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qacg.qerp.exception.ServiceException;
+import com.qacg.qerp.model.dto.PhysicalResourceDto;
+import com.qacg.qerp.model.dto.PhysicalResourceHasFeatureDto;
 import com.qacg.qerp.model.dto.PhysicalResourceTypeDto;
 import com.qacg.qerp.model.dto.ResourceFeatureDto;
 import com.qacg.qerp.persistence.entity.PhysicalResourceType;
@@ -72,7 +74,6 @@ public class ResourceFeatureServiceImpl implements ResourceFeatureService {
       ResourceFeature feature = resourceFeatureRepository.findOne(idResourceFeature);
       ResourceFeatureDto featureDto = new ResourceFeatureDto();
       PhysicalResourceTypeDto typeDto = new PhysicalResourceTypeDto();
-
       BeanUtils.copyProperties(feature.getType(), typeDto);
       featureDto.setType(typeDto);
       featureDto.setIdResourceFeature(idResourceFeature);
@@ -80,6 +81,25 @@ public class ResourceFeatureServiceImpl implements ResourceFeatureService {
       featureDto.setFeatureEsMx(feature.getFeatureEsMx());
 
       return featureDto;
+   }
+
+   @Override
+   public PhysicalResourceDto findAllById(Long idType) throws ServiceException {
+      PhysicalResourceDto physicalResource = new PhysicalResourceDto();
+      PhysicalResourceType type = new PhysicalResourceType();
+      type.setIdPhysicalResourceType(idType);
+      List<PhysicalResourceHasFeatureDto> featuresDto = new ArrayList<>();
+      List<ResourceFeature> features = resourceFeatureRepository.findAllByType(type);
+      
+      for(ResourceFeature feature : features){
+         ResourceFeatureDto featureDTo = new ResourceFeatureDto();
+         PhysicalResourceHasFeatureDto hasFeatureDto= new PhysicalResourceHasFeatureDto();
+         BeanUtils.copyProperties(feature, featureDTo);
+         hasFeatureDto.setResourceFeature(featureDTo);
+         featuresDto.add(hasFeatureDto);
+      }
+      physicalResource.setFeatures(featuresDto);
+      return physicalResource;
    }
 
 }

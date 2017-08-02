@@ -9,10 +9,13 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import com.qacg.qerp.exception.ServiceException;
 import com.qacg.qerp.model.dto.PhysicalResourceDto;
+import com.qacg.qerp.model.dto.PhysicalResourceHasFeatureDto;
 import com.qacg.qerp.model.dto.PhysicalResourceTypeDto;
 import com.qacg.qerp.service.PhysicalResourceService;
 import com.qacg.qerp.service.PhysicalResourceTypeService;
+import com.qacg.qerp.service.ResourceFeatureService;
 
 @ManagedBean(name = "physicalRMB")
 @ViewScoped
@@ -23,7 +26,8 @@ public class PhysicalResourceManagedBean {
 	private Long idResource;
 	private List<PhysicalResourceTypeDto> types;
 	private Long idType;
-	
+	private PhysicalResourceTypeDto physicalType;
+	private List<PhysicalResourceHasFeatureDto> features;
 	
 	
 	
@@ -33,13 +37,43 @@ public class PhysicalResourceManagedBean {
 	@ManagedProperty("#{physicalResourceTypeService}")
 	private PhysicalResourceTypeService tService;
 	
+	@ManagedProperty("#{resourceFeatureService}")
+	private ResourceFeatureService resourceFeatureService;
+	
 	@PostConstruct
 	public void init(){
 		resources = pService.findAll();	
 		types = tService.findAll();
 	}
-	
-	public PhysicalResourceService getpService() {
+
+
+   public ResourceFeatureService getResourceFeatureService() {
+      return resourceFeatureService;
+   }
+
+   public void setResourceFeatureService(ResourceFeatureService resourceFeatureService) {
+      this.resourceFeatureService = resourceFeatureService;
+   }
+
+   public List<PhysicalResourceHasFeatureDto> getFeatures() {
+      return features;
+   }
+
+   public void setFeatures(List<PhysicalResourceHasFeatureDto> features) {
+      this.features = features;
+   }
+
+
+
+   public PhysicalResourceTypeDto getPhysicalType() {
+      return physicalType;
+   }
+
+   public void setPhysicalType(PhysicalResourceTypeDto physicalType) {
+      this.physicalType = physicalType;
+   }
+
+   public PhysicalResourceService getpService() {
 		return pService;
 	}
 
@@ -66,9 +100,6 @@ public class PhysicalResourceManagedBean {
 		this.idResource = idResource;
 	}
 
-
-	
-	
 	public List<PhysicalResourceTypeDto> getTypes() {
 		return types;
 	}
@@ -99,7 +130,12 @@ public class PhysicalResourceManagedBean {
 	}
 
 	public void create(){
-		System.out.println("Llego al metodo");
+		System.out.println("Llego al metodo "+idType);
+		try {
+         resource = resourceFeatureService.findAllById(idType);
+      } catch (ServiceException e) {
+         e.printStackTrace();
+      }
 		
 	}
 	
