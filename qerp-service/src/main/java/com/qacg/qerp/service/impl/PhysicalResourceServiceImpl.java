@@ -2,6 +2,7 @@ package com.qacg.qerp.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +10,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.qacg.qerp.exception.ServiceException;
-import com.qacg.qerp.model.dto.CompanyDto;
 import com.qacg.qerp.model.dto.PhysicalResourceDto;
-import com.qacg.qerp.model.dto.PhysicalResourceHasFeatureDto;
 import com.qacg.qerp.model.dto.PhysicalResourceTypeDto;
-import com.qacg.qerp.model.dto.ResourceFeatureDto;
-import com.qacg.qerp.persistence.entity.Company;
 import com.qacg.qerp.persistence.entity.PhysicalResource;
-import com.qacg.qerp.persistence.entity.PhysicalResourceHasFeature;
 import com.qacg.qerp.persistence.entity.PhysicalResourceType;
-import com.qacg.qerp.persistence.entity.ResourceFeature;
 import com.qacg.qerp.persistence.repository.PhysicalResourceRepository;
 import com.qacg.qerp.service.PhysicalResourceService;
+import com.qacg.qerp.service.builder.PhysicalResourceBuilder;
 
 @Service("physicalRService")
 public class PhysicalResourceServiceImpl implements PhysicalResourceService {
@@ -39,62 +35,24 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 	@Override
 	public List<PhysicalResourceDto> findAll() {
 		List<PhysicalResource> resources = physicalResourceRepository.findAll();
-		List<PhysicalResourceDto> dtos = new ArrayList<>(); 
-		for (PhysicalResource resource : resources) {
-			PhysicalResourceDto dto = new PhysicalResourceDto();
-			PhysicalResourceTypeDto pRType = new PhysicalResourceTypeDto();
-			CompanyDto company = new CompanyDto();
-			dto.setFeatures(new ArrayList<>());
-			for(PhysicalResourceHasFeature feature : resource.getFeatures()){
-				PhysicalResourceHasFeatureDto featureDto = new PhysicalResourceHasFeatureDto();
-				ResourceFeatureDto resourceFeatureDto = new ResourceFeatureDto();
-				BeanUtils.copyProperties(feature, featureDto);
-				BeanUtils.copyProperties(feature.getResourceFeature(),resourceFeatureDto);
-				featureDto.setResourceFeature(resourceFeatureDto);
-				dto.getFeatures().add(featureDto);
-				
-			}
-			company.setPrefix(resource.getCompany().getPrefix());
-			company.setName(resource.getCompany().getName());
-			pRType.setNameEnUs(resource.getpRType().getNameEnUs());
-			pRType.setNameEsMx(resource.getpRType().getNameEsMx());
-			pRType.setPicture(resource.getpRType().getPicture());
-			dto.setCompany(company);
-			dto.setIdPhysicalResource(resource.getIdPhysicalResource());
-			dto.setpRType(pRType);
-			dtos.add(dto);
-		}
-		return dtos;
+		return resources.stream().map(PhysicalResourceBuilder::build).collect(Collectors.toList());
 	}
 
 	@Override
 	public void save(PhysicalResourceDto physicalDto) throws ServiceException {
 		PhysicalResource physicalResource = new PhysicalResource();
-		List<PhysicalResourceHasFeature> features = new ArrayList<>();
-		Company company = new Company();
-		PhysicalResourceType type = new PhysicalResourceType(); 
+		PhysicalResourceType type = new PhysicalResourceType();
+		PhysicalResourceTypeDto typeDto = new PhysicalResourceTypeDto();
 		BeanUtils.copyProperties(physicalDto.getpRType(), type);
 		Long idType= physicalDto.getIdPhysicalResource();
 		if(null==physicalDto.getpRType().getIdPhysicalResourceType()){
-		   
 		   physicalResource = physicalResourceRepository.findOne(idType);
-		   type.setIdPhysicalResourceType(physicalResource.getpRType().getIdPhysicalResourceType());
+		   typeDto.setIdPhysicalResourceType(physicalResource.getpRType().getIdPhysicalResourceType());
+	        physicalDto.setpRType(typeDto);
 		}
-		for(PhysicalResourceHasFeatureDto featureItem : physicalDto.getFeatures()){
-			PhysicalResourceHasFeature item = new  PhysicalResourceHasFeature();
-			ResourceFeature resourceFeature = new ResourceFeature();
-			BeanUtils.copyProperties(featureItem.getResourceFeature(), resourceFeature);
-			BeanUtils.copyProperties(featureItem, item);
-			item.setResourceFeature(resourceFeature);
-			item.setPhysicalResource(physicalResource);
-			features.add(item);
-		}
-		company.setIdCompany(1L);
-		physicalResource.setpRType(type);
-		physicalResource.setFeatures(features);
-		physicalResource.setCompany(company);
+		physicalDto.setIdCompany(1L);
 		try {
-			physicalResourceRepository.save(physicalResource);
+		   physicalResourceRepository.save(PhysicalResourceBuilder.build(physicalDto));
 		} catch (DataAccessException ex) {
 			throw new ServiceException(ex.getMessage());
 		}
@@ -111,6 +69,45 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 		}
 		
 	}
+
+
+   @Override
+   public List<PhysicalResourceDto> search(Long idType, String value) {
+      List<PhysicalResourceDto> data = new ArrayList<>();
+      if(!idType.toString().equals("0")){
+          if(!"0".equals(value)){
+             data = findAllByFeature(idType , value);
+
+          }
+          else{
+             data = findAllByType(idType);
+
+          }
+          return data;
+       }
+       else{
+          return findAll();
+       }
+      
+   }
+
+
+   @Override
+   public List<PhysicalResourceDto> findAllByType(Long idType) {
+
+      PhysicalResourceType type = new PhysicalResourceType();
+      type.setIdPhysicalResourceType(idType);
+      List<PhysicalResource> resources = physicalResourceRepository.findAllByPRType(type);
+  
+      return resources.stream().map(PhysicalResourceBuilder::build).collect(Collectors.toList());
+   }
+
+
+   @Override
+   public List<PhysicalResourceDto> findAllByFeature(Long idType, String value) {
+      List<PhysicalResource> resources =  physicalResourceRepository.findAllByFeature(idType, value);
+      return resources.stream().map(PhysicalResourceBuilder::build).collect(Collectors.toList());
+   }
 
 	
 }

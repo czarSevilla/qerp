@@ -11,9 +11,13 @@ public interface PhysicalResourceService {
 
 	List<PhysicalResourceDto> findAll();
 	
+	List<PhysicalResourceDto> search(Long idType, String value);
+	
 	void save(PhysicalResourceDto physicalDto) throws ServiceException;
 	
 	void delete(Long idResource) throws ServiceException;
+
+	List<PhysicalResourceDto> findAllByType(Long idType);
 	
-	//List<PhysicalResourceHasFeatureDto> findAllFeatures(Long idPhysicalResource);
+	List<PhysicalResourceDto> findAllByFeature(Long idType, String value);
 }

@@ -17,57 +17,54 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "physical_resource")
-public class PhysicalResource  implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	private Long idPhysicalResource;
-	private List<PhysicalResourceHasFeature> features;
-	private PhysicalResourceType pRType;
-	private Company company;
+public class PhysicalResource implements Serializable {
+   /**
+    * 
+    */
+   private static final long                serialVersionUID = 1L;
 
-	
-	@Id
-	@Column(name ="id_physical_resource")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getIdPhysicalResource() {
-		return idPhysicalResource;
-	}
-	public void setIdPhysicalResource(Long idPhysicalResource) {
-		this.idPhysicalResource = idPhysicalResource;
-	}
+   private Long                             idPhysicalResource;
+   private List<PhysicalResourceHasFeature> features;
+   private PhysicalResourceType             pRType;
+   private Long                             idCompany;
 
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_physical_resource_type")
-	public PhysicalResourceType getpRType() {
-		return pRType;
-	}
-	public void setpRType(PhysicalResourceType pRType) {
-		this.pRType = pRType;
-	}
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_company")
-	public Company getCompany() {
-		return company;
-	}
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "physicalResource" ,cascade = CascadeType.ALL)
-	public List<PhysicalResourceHasFeature> getFeatures() {
-		return features;
-	}
-	public void setFeatures(List<PhysicalResourceHasFeature> features) {
-		this.features = features;
-	}
-	
-	
-	
-	
+   @Id
+   @Column(name = "id_physical_resource")
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   public Long getIdPhysicalResource() {
+      return idPhysicalResource;
+   }
+
+   public void setIdPhysicalResource(Long idPhysicalResource) {
+      this.idPhysicalResource = idPhysicalResource;
+   }
+
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "id_physical_resource_type")
+   public PhysicalResourceType getpRType() {
+      return pRType;
+   }
+
+   public void setpRType(PhysicalResourceType pRType) {
+      this.pRType = pRType;
+   }
+
+   @Column(name = "id_company", nullable = false)
+   public Long getIdCompany() {
+      return idCompany;
+   }
+
+   public void setIdCompany(Long idCompany) {
+      this.idCompany = idCompany;
+   }
+
+   @OneToMany(fetch = FetchType.EAGER, mappedBy = "physicalResource", cascade = CascadeType.ALL)
+   public List<PhysicalResourceHasFeature> getFeatures() {
+      return features;
+   }
+
+   public void setFeatures(List<PhysicalResourceHasFeature> features) {
+      this.features = features;
+   }
 
 }

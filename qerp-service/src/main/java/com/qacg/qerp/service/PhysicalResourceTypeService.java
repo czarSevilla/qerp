@@ -12,5 +12,6 @@ public interface PhysicalResourceTypeService {
 	void save(PhysicalResourceTypeDto physicalResourceTypeDto ) throws ServiceException;
 	
 	void delete(Long idPhysicalResourceTypeDto) throws ServiceException;
+	
 
 }

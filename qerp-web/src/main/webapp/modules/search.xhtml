@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:b="http://bootsfaces.net/ui"
+   xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+   <title></title>
+</h:head>
+<h:body>
+   <ui:composition>
+      <p:outputPanel id="searchMethod">
+         <p:panelGrid columns="4">
+            <b:selectOneMenu value="#{physicalRMB.typeItem}" update="features,valueCombo">
+               <f:selectItem itemLabel="Choose an Option" itemValue="0" />
+               <f:selectItems value="#{physicalRMB.types}" var="typeP" itemLabel="#{appMB.localize(typeP,'name')}" itemValue="#{typeP.idPhysicalResourceType}" />
+               <f:ajax listener="#{physicalRMB.getTypeResource}" />
+            </b:selectOneMenu>
+            <b:selectOneMenu value="#{physicalRMB.typeComponent}" id="features" update="valueCombo">
+               <f:selectItem itemLabel="Choose an Option" itemValue="0" />
+               <f:selectItems value="#{physicalRMB.features}" var="typeF" itemLabel="#{appMB.localize(typeF,'feature')}" itemValue="#{typeF.idResourceFeature}" />
+               <f:ajax listener="#{physicalRMB.getComponentValue}" />
+            </b:selectOneMenu>
+            <b:selectOneMenu value="#{physicalRMB.value}" id="valueCombo">
+               <f:selectItem itemLabel="Choose an Option" itemValue="0" />
+               <f:selectItems value="#{physicalRMB.values}" var="typeV" itemLabel="#{typeV.value}" itemValue="#{typeV.value}" />
+            </b:selectOneMenu>
+            <b:commandButton value="buscar" style="margin:20px 0;" icon-awesome="plus" title="#{lbl['create']}" size="md" look="primary" actionListener="#{physicalRMB.search}" update="form:panel"/>
+         </p:panelGrid>
+
+      </p:outputPanel>
+   </ui:composition>
+</h:body>
+</html>
+

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.qacg.qerp.exception.ServiceException;
 import com.qacg.qerp.model.dto.PhysicalResourceHasFeatureDto;
+import com.qacg.qerp.model.dto.ResourceFeatureDto;
 
 public interface PhysicalResourceHasFeatureService {
 	
@@ -15,4 +16,8 @@ public interface PhysicalResourceHasFeatureService {
 	
 	PhysicalResourceHasFeatureDto findOne(Long idPhysicalResourceHasFeature) throws ServiceException;
 
+	List<ResourceFeatureDto> findByID(Long idItem);
+	
+	List<PhysicalResourceHasFeatureDto> findByComponent(Long idComponent);
 }
+ 

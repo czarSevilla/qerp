@@ -11,7 +11,7 @@
    <ui:composition template="../layout/commonLayout.xhtml">
       <ui:define name="content">
          <h:form id="form">
-         
+
             <b:modal title="#{lbl['specific.detail']}" styleClass="viewSeudoClass" size="small">
                <p:outputPanel id="features">
                   <p:panelGrid columns="2">
@@ -20,7 +20,7 @@
                         <p:outputLabel value="#{lbl['id']}" />
                         <p:outputLabel value="#{physicalRMB.resource.idPhysicalResource}" />
                         <p:outputLabel value="#{lbl['company']}" />
-                        <p:outputLabel value="#{physicalRMB.resource.company.name}" />
+                        <p:outputLabel value="#{physicalRMB.resource.idCompany}" />
                      </p:panelGrid>
                   </p:panelGrid>
                   <br />
@@ -45,17 +45,20 @@
                <b:form id="formAdd">
                   <ui:include src="addPhysicalResource.xhtml" />
                   <p:panelGrid columns="2">
+                     <p:panelGrid columns="2"  >
+                        
+                        <b:selectOneMenu value="#{physicalRMB.idType}" label="Physical Resource Type" id="combobox">
+                           <f:selectItem itemLabel="Choose an Option" itemValue="" />
+                           <f:selectItems value="#{physicalRMB.types}" var="typeV" itemLabel="#{appMB.localize(typeV,'name')}"
+                              itemValue="#{typeV.idPhysicalResourceType}" />
+                        </b:selectOneMenu>
 
-                     <b:selectOneMenu value="#{physicalRMB.idType}" label="Physical Resource Type" id="combobox">
-                        <f:selectItem itemLabel="Choose an Option" itemValue="" />
-                        <f:selectItems value="#{physicalRMB.types}" var="typeV" itemLabel="#{appMB.localize(typeV,'name')}"
-                           itemValue="#{typeV.idPhysicalResourceType}" />
-                     </b:selectOneMenu>
 
-
-                     <b:commandButton style="margin:20px 0;" icon-awesome="plus" title="#{lbl['create']}" size="md" look="primary" value="#{lbl['create']}"
-                        actionListener="#{physicalRMB.create()}" update="formAdd:addPhysicalResourceDetail" oncomplete="$('.modalToAddSeudoClass').modal()">
-                     </b:commandButton>
+                        <b:commandButton style="margin:20px 0;" icon-awesome="plus" title="#{lbl['create']}" size="md" look="primary" value="#{lbl['create']}"
+                           actionListener="#{physicalRMB.create()}" update="formAdd:addPhysicalResourceDetail" oncomplete="$('.modalToAddSeudoClass').modal()">
+                        </b:commandButton>
+                     </p:panelGrid>
+                     <ui:include src="search.xhtml"/>
                   </p:panelGrid>
                </b:form>
             </p:panel>
@@ -77,14 +80,15 @@
                            <p:outputLabel value="#{lbl['id']}" />
                            <p:outputLabel value="#{item.idPhysicalResource}" />
                            <p:outputLabel value="#{lbl['name.company']}" />
-                           <p:outputLabel value="#{item.company.name}" />
+                           <p:outputLabel value="#{item.idCompany}" />
 
                            <b:commandButton icon-awesome="search" oncomplete="$('.viewSeudoClass').modal()" update="form:features">
                               <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
                               <f:ajax />
                            </b:commandButton>
-                           <b:commandButton icon-awesome="pencil" oncomplete="$('.modalToAddSeudoClass').modal()" update ="form:formAdd:addPhysicalResourceDetail" >
-                              <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />                              
+                           <b:commandButton icon-awesome="pencil" oncomplete="$('.modalToAddSeudoClass').modal()"
+                              update="form:formAdd:addPhysicalResourceDetail">
+                              <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
                            </b:commandButton>
 
                         </h:panelGrid>

@@ -5,7 +5,6 @@ import java.util.List;
 import com.qacg.qerp.exception.ServiceException;
 import com.qacg.qerp.model.dto.PhysicalResourceDto;
 import com.qacg.qerp.model.dto.ResourceFeatureDto;
-import com.qacg.qerp.persistence.entity.ResourceFeature;
 
 public interface ResourceFeatureService {
 
