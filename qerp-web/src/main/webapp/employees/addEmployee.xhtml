@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:head>
+        <title></title>
+    </h:head>
+<h:body>
+<ui:composition template="../layout/commonLayout.xhtml">
+    <ui:define name="content">
+			<p:outputPanel id="detail">
+             	<p:outputPanel rendered="#{not empty secRoleMB.dto}" >
+                	<b:tabView tabPosition="left" >
+	                    <b:tab title="#{lbl['general.data']}">
+	                    	<b:container>
+	                    		<b:row>
+	                    			<b:column></b:column>
+	                    			<b:column></b:column>
+	                    		</b:row>
+	                    	</b:container>
+	                        <b:panelGrid columns="3" size="xs">
+	                           	<b:inputText label="#{lbl['profile.picture']}" />
+								<b:inputText label="#{lbl['name']}"  />	
+								<b:inputText label="#{lbl['last.name']}"  /> 
+								<b:inputText label="#{lbl['day.birth']}"  /> 
+								<b:inputText label="#{lbl['place.birth']}" />
+								<b:inputText label="#{lbl['gender']}"  />	
+								<b:inputText label="#{lbl['nationality']}"  /> 
+								<b:inputText label="#{lbl['tin']}" />
+								<b:inputText label="#{lbl['curp']}"/>
+								<b:inputText label="#{lbl['ssn']}"/>	
+								<b:inputText label="#{lbl['marital.status']}"/> 
+								<b:inputText label="#{lbl['home.phone']}"/>
+								<b:inputText label="#{lbl['cellphone']}"  />
+								<b:inputText label="#{lbl['emergy.phone']}"/>									   
+							</b:panelGrid>                                  
+	                    </b:tab>
+	                    <b:tab title="#{lbl['address.data']}">
+	                        <b:panelGrid columns="2" size="xs">
+	                           	<b:inputText label="#{lbl['street']}" />
+								<b:inputText label="#{lbl['apartment.number']}"  />	
+								<b:inputText label="#{lbl['street.number']}"  /> 
+								<b:inputText label="#{lbl['surbub']}"  /> 
+								<b:inputText label="#{lbl['city']}" />
+								<b:inputText label="#{lbl['state']}"  />	
+								<b:inputText label="#{lbl['zip.code']}"  /> 								   
+							</b:panelGrid>
+	                    </b:tab>
+	                    <b:tab title="#{lbl['academy.information']}">
+	                        <b:panelGrid columns="2" size="xs">
+	                           	<b:inputText label="#{lbl['schooling']}" />
+								<b:inputText label="#{lbl['academic.education']}"  />	
+								<b:inputText label="#{lbl['profession']}"  /> 
+								<b:inputText label="#{lbl['years.experience']}"  /> 								   
+							</b:panelGrid>
+	                    </b:tab>
+	                    <b:tab title="#{lbl['courses']}">
+	                        <b:panelGrid columns="2" size="xs">
+	                           	<b:inputText label="#{lbl['course.name']}" />
+								<b:inputText label="#{lbl['course.date']}"  />								   
+							</b:panelGrid>
+	                    </b:tab>
+	                    <b:tab title="#{lbl['certifications']}">
+	                        <b:panelGrid columns="3" size="xs">
+	                           	<b:inputText label="#{lbl['cert.name']}" />
+								<b:inputText label="#{lbl['cert.date']}"  />	
+								<b:inputText label="#{lbl['cert.id']}"  /> 								   
+							</b:panelGrid>
+	                    </b:tab>
+	                    <b:tab title="#{lbl['language']}">
+	                        <b:panelGrid columns="3" size="xs">
+	                           	<b:inputText label="#{lbl['language.name']}" />
+								<b:inputText label="#{lbl['porcent.write']}"  />	
+								<b:inputText label="#{lbl['porcent.speake']}"  />  								   
+							</b:panelGrid>
+	                    </b:tab>
+	                    <b:tab title="#{lbl['references']}">
+	                        <b:panelGrid columns="2" size="xs">
+	                           	<b:inputText label="#{lbl['reference.name']}" />
+								<b:inputText label="#{lbl['reference.phone']}"  />	
+								<b:inputText label="#{lbl['reference.type']}"  /> 
+								<b:inputText label="#{lbl['reference.relationship']}"  /> 								   
+							</b:panelGrid>
+	                    </b:tab>
+	                    <b:tab title="#{lbl['technical.profile']}">
+	                        <b:panelGrid columns="3" size="xs">
+	                           	<b:inputText label="#{lbl['skill.type']}" />
+								<b:inputText label="#{lbl['technology.type']}"  />	
+								<b:inputText label="#{lbl['technical.experience']}"  /> 							   
+							</b:panelGrid>
+	                    </b:tab>
+                	</b:tabView>    
+           		</p:outputPanel>                    
+           	</p:outputPanel>
+	</ui:define>
+</ui:composition>
+</h:body>
+</html>

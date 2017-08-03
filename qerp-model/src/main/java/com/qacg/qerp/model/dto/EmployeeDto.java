@@ -4,15 +4,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class EmployeeDto implements Serializable {
-
-	/**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 	
 	private Long idEmployee;
 	private String name;
 	private String lastName;
+	private Date birthday;
+	private String placeBirth;
+	private String gender;
+	private String nationality;
+	private String tin;
 	private String numberEmployee;
 	private Date startDate;
 	private String profilePicture;

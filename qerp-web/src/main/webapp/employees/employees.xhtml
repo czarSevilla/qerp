@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<title>#{lbl['header.title']}</title>
@@ -12,22 +13,16 @@
 <h:body style="padding-top: 50px; padding-bottom: 20px;">
 	<ui:composition template="../layout/commonLayout.xhtml">
 		<ui:define name="content">
-			<h:form id="form">
+			<b:form id="form">
 				<b:container fluid="true">
 				
 					<b:growl id="growMsg" globalOnly="true" placementFrom="top" showDetail="true" 
 					showSummary="true" allowDismiss="true" delay="10000" escape="false" />
 
-					<ui:include src="add.xhtml" />
-
-					<b:commandButton style="margin:20px 0;" icon-awesome="plus"
+					<b:button style="margin:20px 0;" icon-awesome="plus"
 						look="primary" value="#{lbl['create']}" title="#{lbl['create']}"
-						size="md" actionListener="#{employeeMB.create}"
-						oncomplete="$('.modalSeudoClass').modal()" update="form">
-						<f:setPropertyActionListener value="#{lbl['create']}"
-							target="#{employeeMB.actionTitle}" />
-					</b:commandButton>
-
+						size="md" outcome="addEmployee.xhtml"/>
+						
 					<b:dataTable id="list-items" var="emp" value="#{employeeMB.employees}">
 						<b:dataTableColumn>
 							<f:facet name="header">
@@ -58,7 +53,7 @@
 						</b:dataTableColumn>
 					</b:dataTable>
 				</b:container>
-			</h:form>
+			</b:form>
 		</ui:define>
 	</ui:composition>
 </h:body>
