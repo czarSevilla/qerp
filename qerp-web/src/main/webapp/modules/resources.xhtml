@@ -11,7 +11,8 @@
    <ui:composition template="../layout/commonLayout.xhtml">
       <ui:define name="content">
          <h:form id="form">
-
+               <b:growl id="growMsg" globalOnly="true" placementFrom="top" showDetail="true" 
+               showSummary="true" allowDismiss="true" delay="10000" escape="false"   />
             <b:modal title="#{lbl['specific.detail']}" styleClass="viewSeudoClass" size="small">
                <p:outputPanel id="features">
                   <p:panelGrid columns="2">
@@ -38,7 +39,22 @@
                   </b:dataTable>
                </p:outputPanel>
             </b:modal>
-
+            
+             <b:modal title="#{lbl['confirm']}" styleClass="confirmSeudoClass" size="small"  >
+               <p:outputPanel id="confirmDlg">
+                  <p:outputPanel rendered="#{not empty physicalRMB.idResource}" >
+                     <b:iconAwesome name="exclamation-triangle fa-fw" size="2x" />
+                     <p:outputLabel value="#{lbl['sure.question']}" />
+                  </p:outputPanel>              
+               </p:outputPanel>
+               <f:facet name="footer">
+                     <b:button value="#{lbl['cancel']}" dismiss="modal" />
+                     <b:commandButton actionListener="#{physicalRMB.delete(physicalRMB.idResource)}"
+                        value="#{lbl['delete']}"  title="#{lbl['delete']}" 
+                         update="form:panel form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" >
+                  </b:commandButton>
+                 </f:facet>
+            </b:modal>
 
 
             <p:panel id="add">
@@ -81,7 +97,8 @@
                            <p:outputLabel value="#{item.idPhysicalResource}" />
                            <p:outputLabel value="#{lbl['name.company']}" />
                            <p:outputLabel value="#{item.idCompany}" />
-
+                           <p:column colspan="2" >
+                           <p:panelGrid columns="3">
                            <b:commandButton icon-awesome="search" oncomplete="$('.viewSeudoClass').modal()" update="form:features">
                               <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
                               <f:ajax />
@@ -90,7 +107,16 @@
                               update="form:formAdd:addPhysicalResourceDetail">
                               <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
                            </b:commandButton>
-
+                           
+                            <b:commandButton icon-awesome="eraser" update="form:confirmDlg" oncomplete="$('.confirmSeudoClass').modal()" >
+                             <f:setPropertyActionListener  value="#{item.idPhysicalResource}" target="#{physicalRMB.idResource}" />
+                             </b:commandButton>
+                             </p:panelGrid>
+                           </p:column>
+                           
+                           <p:outputLabel value="estado"/>
+                           
+                           
                         </h:panelGrid>
                      </h:panelGrid>
                   </p:panel>

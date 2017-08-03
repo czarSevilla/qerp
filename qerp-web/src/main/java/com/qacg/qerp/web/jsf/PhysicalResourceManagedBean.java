@@ -22,6 +22,7 @@ import com.qacg.qerp.service.PhysicalResourceHasFeatureService;
 import com.qacg.qerp.service.PhysicalResourceService;
 import com.qacg.qerp.service.PhysicalResourceTypeService;
 import com.qacg.qerp.service.ResourceFeatureService;
+import com.qacg.qerp.web.util.MessageUtils;
 
 @ManagedBean(name = "physicalRMB")
 @ViewScoped
@@ -39,6 +40,7 @@ public class PhysicalResourceManagedBean {
    private Long                                typeComponent;
    private String                               value;
    private static final Logger                 LOG = LoggerFactory.getLogger(PhysicalResourceManagedBean.class);
+   public static final String SUCCESS = "success.detail";
 
    @ManagedProperty("#{physicalRService}")
    private PhysicalResourceService             pService;
@@ -206,9 +208,15 @@ public class PhysicalResourceManagedBean {
    }
 
    public void getComponentValue() {
-
+      
+      if(!typeComponent.toString().equals("0")){
+         value = null;
       values = featureService.findByComponent(typeComponent);
-   }
+      }
+      else{
+         values = new ArrayList<>();
+      }
+      }
 
    public void search(){
       resources = pService.search(typeItem, value);
@@ -238,25 +246,29 @@ public class PhysicalResourceManagedBean {
    }
 
    public void save() {
+      FacesContext ctx = FacesContext.getCurrentInstance();
       try {
          pService.save(resource);
          resources = pService.findAll();
-
+         ctx.addMessage(null, MessageUtils.success(ctx, SUCCESS));
       } catch (ServiceException se) {
-
+         ctx.addMessage(null, MessageUtils.error(ctx, se.getMessage()));
       }
 
    }
 
    public void delete(Long idResource) {
+      FacesContext ctx = FacesContext.getCurrentInstance();
       try {
          pService.delete(idResource);
          resources = pService.findAll();
-
+         ctx.addMessage(null, MessageUtils.success(ctx, SUCCESS));
       } catch (ServiceException se) {
-
+         ctx.addMessage(null, MessageUtils.error(ctx, se.getMessage()));
       }
 
    }
 
 }
+
+
