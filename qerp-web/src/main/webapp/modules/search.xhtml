@@ -10,20 +10,20 @@
       <p:outputPanel id="searchMethod">
          <p:panelGrid columns="4">
             <b:selectOneMenu value="#{physicalRMB.typeItem}" update="features,valueCombo">
-               <f:selectItem itemLabel="Choose an Option" itemValue="0" />
+               <f:selectItem itemLabel="#{lbl['select']}" itemValue="0" />
                <f:selectItems value="#{physicalRMB.types}" var="typeP" itemLabel="#{appMB.localize(typeP,'name')}" itemValue="#{typeP.idPhysicalResourceType}" />
                <f:ajax listener="#{physicalRMB.getTypeResource}" />
             </b:selectOneMenu>
             <b:selectOneMenu value="#{physicalRMB.typeComponent}" id="features" update="valueCombo">
-               <f:selectItem itemLabel="Choose an Option" itemValue="0" />
+               <f:selectItem itemLabel="#{lbl['select']}" itemValue="0" />
                <f:selectItems value="#{physicalRMB.features}" var="typeF" itemLabel="#{appMB.localize(typeF,'feature')}" itemValue="#{typeF.idResourceFeature}" />
                <f:ajax listener="#{physicalRMB.getComponentValue}" />
             </b:selectOneMenu>
             <b:selectOneMenu value="#{physicalRMB.value}" id="valueCombo">
-               <f:selectItem itemLabel="Choose an Option" itemValue="0" />
+               <f:selectItem itemLabel="#{lbl['select']}" itemValue="0" />
                <f:selectItems value="#{physicalRMB.values}" var="typeV" itemLabel="#{typeV.value}" itemValue="#{typeV.value}" />
             </b:selectOneMenu>
-            <b:commandButton value="buscar" style="margin:20px 0;" icon-awesome="plus" title="#{lbl['create']}" size="md" look="primary" actionListener="#{physicalRMB.search}" update="form:panel"/>
+            <b:commandButton value="#{lbl['search']}" style="margin:20px 0;" icon-awesome="plus"  size="md" look="primary" actionListener="#{physicalRMB.search}" update="form:panel"/>
          </p:panelGrid>
 
       </p:outputPanel>

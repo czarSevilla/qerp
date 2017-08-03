@@ -12,13 +12,13 @@
             <b:dataTable value="#{physicalRMB.resource.features}" var="feature" paginated="false" searching="false" striped="true" info="false">
                <b:dataTableColumn value="#{appMB.localize(feature.resourceFeature,'feature')}">
                   <f:facet name="header">
-                     <h:outputLabel value="Etiqueta de nombre" />
+                     <h:outputLabel value="#{lbl['feature.feature']}" />
                   </f:facet>
                </b:dataTableColumn>
                <b:dataTableColumn>
                   <b:inputText value="#{feature.value}"/>
                   <f:facet name="header">
-                     <h:outputLabel value="Etiqueta de nombre" />
+                     <h:outputLabel value="#{lbl['value']}" />
                   </f:facet>
                </b:dataTableColumn>
             </b:dataTable>
