@@ -3,6 +3,7 @@ package com.qacg.qerp.service;
 import java.util.List;
 
 import com.qacg.qerp.exception.ServiceException;
+import com.qacg.qerp.model.dto.PhysicalResourceDto;
 import com.qacg.qerp.model.dto.PhysicalResourceHasFeatureDto;
 import com.qacg.qerp.model.dto.ResourceFeatureDto;
 
@@ -19,5 +20,7 @@ public interface PhysicalResourceHasFeatureService {
 	List<ResourceFeatureDto> findByID(Long idItem);
 	
 	List<PhysicalResourceHasFeatureDto> findByComponent(Long idComponent);
+
+   PhysicalResourceDto compare(PhysicalResourceDto resource, PhysicalResourceDto resourceTmp);
 }
  

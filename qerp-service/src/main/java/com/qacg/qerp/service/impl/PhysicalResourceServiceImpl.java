@@ -109,4 +109,12 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
       return resources.stream().map(PhysicalResourceBuilder::build).collect(Collectors.toList());
    }
 
+   @Override
+   public PhysicalResourceDto findOne(Long idPhysicalResource) {
+      PhysicalResource physicalResource;
+      physicalResource = physicalResourceRepository.findOne(idPhysicalResource);
+      return PhysicalResourceBuilder.build(physicalResource);
+   }
+
+   
 }

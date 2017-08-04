@@ -140,4 +140,38 @@ public class PhysicalResourceHasFeatureServiceImpl implements PhysicalResourceHa
       return featuresDto;
    }
 
+   @Override
+   public PhysicalResourceDto compare(PhysicalResourceDto resource, PhysicalResourceDto resourceTmp) {
+      PhysicalResourceDto toSend = new PhysicalResourceDto();
+      List<PhysicalResourceHasFeatureDto> aux =resource.getFeatures();
+      List<PhysicalResourceHasFeatureDto> aux2 =resourceTmp.getFeatures();  
+      if(aux.size()>aux2.size()){
+         toSend=resource;
+      }
+      
+      else if(aux.size()<aux2.size()){
+         for(int count = 0 ; count<aux2.size();count++){
+            if(count<=aux.size()-1){
+               PhysicalResourceDto tmp = new PhysicalResourceDto();
+               
+               tmp = aux2.get(count).getPhysicalResource();
+               aux2.get(count).setValue(aux.get(count).getValue());
+               aux2.get(count).setIdPhysicalResourceHasFeature(aux.get(count).getIdPhysicalResourceHasFeature());
+               aux2.get(count).setPhysicalResource(tmp);
+            }
+            else{
+               aux2.get(count).setValue("N/A");
+               
+            }
+         }
+          
+      }
+      toSend = resource;
+      toSend.setFeatures(aux2);   
+      return toSend;
+      
+      
+      
+   }
+
 }

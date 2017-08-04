@@ -107,9 +107,10 @@
                               <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
                               <f:ajax />
                            </b:commandButton>
+                           
                            <b:commandButton icon-awesome="pencil" oncomplete="$('.modalToAddSeudoClass').modal()"
-                              update="form:formAdd:addPhysicalResourceDetail" look="primary">
-                              <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
+                              update="form:formAdd:addPhysicalResourceDetail" look="primary" actionListener="#{physicalRMB.edit(item.idPhysicalResource)}"  >
+
                            </b:commandButton>
                            
                             <b:commandButton icon-awesome="eraser" update="form:confirmDlg" oncomplete="$('.confirmSeudoClass').modal()" look="danger">

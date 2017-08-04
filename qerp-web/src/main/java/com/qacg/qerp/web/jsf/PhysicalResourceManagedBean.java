@@ -30,6 +30,7 @@ public class PhysicalResourceManagedBean {
 
    private List<PhysicalResourceDto>           resources;
    private PhysicalResourceDto                 resource;
+   private PhysicalResourceDto                 resourceTmp;
    private Long                                idResource;
    private List<PhysicalResourceTypeDto>       types;
    private Long                                idType;
@@ -191,8 +192,15 @@ public class PhysicalResourceManagedBean {
    public void setTypeItem(Long typeItem) {
       this.typeItem = typeItem;
    }
+  
+   public PhysicalResourceDto getResourceTmp() {
+      return resourceTmp;
+   }
 
-   
+   public void setResourceTmp(PhysicalResourceDto resourceTmp) {
+      this.resourceTmp = resourceTmp;
+   }
+
    
    public void getTypeResource() {
       if(!typeItem.toString().equals("0")){
@@ -231,13 +239,15 @@ public class PhysicalResourceManagedBean {
 
    }
    
-   public void edit(){
-      try {
-         resource = resourceFeatureService.findAllById(idType);
-      } catch (ServiceException e) {
-         LOG.error("Error at Create Method", e);
-      }
+   public void edit(Long id) throws ServiceException {
+         try{
+         resourceTmp = pService.findOne(id);
+         resource = featureService.compare(resourceTmp,resourceFeatureService.findAllById(resourceTmp.getpRType().getIdPhysicalResourceType()));
+         }catch(ServiceException se) {
+            LOG.error("It could not be modified try to do later",se);
+         }
    }
+
 
    public String printType(PhysicalResourceTypeDto dto) {
       Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();

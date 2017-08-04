@@ -20,4 +20,6 @@ public interface PhysicalResourceService {
 	List<PhysicalResourceDto> findAllByType(Long idType);
 	
 	List<PhysicalResourceDto> findAllByFeature(Long idType, String value);
+
+   PhysicalResourceDto findOne(Long idPhysicalResource);
 }
