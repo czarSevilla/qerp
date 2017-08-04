@@ -145,7 +145,7 @@ public class PhysicalResourceHasFeatureServiceImpl implements PhysicalResourceHa
       PhysicalResourceDto toSend = new PhysicalResourceDto();
       List<PhysicalResourceHasFeatureDto> aux =resource.getFeatures();
       List<PhysicalResourceHasFeatureDto> aux2 =resourceTmp.getFeatures();  
-      if(aux.size()>aux2.size()){
+      if(aux.size()>=aux2.size()){
          toSend=resource;
       }
       
@@ -164,10 +164,10 @@ public class PhysicalResourceHasFeatureServiceImpl implements PhysicalResourceHa
                
             }
          }
-          
+         toSend = resource;
+         toSend.setFeatures(aux2);  
       }
-      toSend = resource;
-      toSend.setFeatures(aux2);   
+ 
       return toSend;
       
       
