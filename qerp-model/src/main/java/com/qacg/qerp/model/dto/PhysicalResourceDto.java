@@ -2,6 +2,7 @@ package com.qacg.qerp.model.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PhysicalResourceDto implements Serializable {
@@ -16,6 +17,7 @@ public class PhysicalResourceDto implements Serializable {
 
    private PhysicalResourceTypeDto             pRType;
    private List<PhysicalResourceHasFeatureDto> features;
+   private Date                                registerDate;
 
    public PhysicalResourceDto() {
       pRType = new PhysicalResourceTypeDto();
@@ -54,5 +56,15 @@ public class PhysicalResourceDto implements Serializable {
    public void setFeatures(List<PhysicalResourceHasFeatureDto> features) {
       this.features = features;
    }
+
+   public Date getRegisterDate() {
+      return registerDate;
+   }
+
+   public void setRegisterDate(Date registerDate) {
+      this.registerDate = registerDate;
+   }
+   
+   
 
 }

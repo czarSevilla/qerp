@@ -230,6 +230,14 @@ public class PhysicalResourceManagedBean {
       }
 
    }
+   
+   public void edit(){
+      try {
+         resource = resourceFeatureService.findAllById(idType);
+      } catch (ServiceException e) {
+         LOG.error("Error at Create Method", e);
+      }
+   }
 
    public String printType(PhysicalResourceTypeDto dto) {
       Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();

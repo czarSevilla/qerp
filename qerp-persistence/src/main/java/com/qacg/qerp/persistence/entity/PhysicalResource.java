@@ -1,6 +1,7 @@
 package com.qacg.qerp.persistence.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,6 +28,7 @@ public class PhysicalResource implements Serializable {
    private List<PhysicalResourceHasFeature> features;
    private PhysicalResourceType             pRType;
    private Long                             idCompany;
+   private Date                              registerDate;
 
    @Id
    @Column(name = "id_physical_resource")
@@ -67,4 +69,15 @@ public class PhysicalResource implements Serializable {
       this.features = features;
    }
 
+   @Column(name = "register_date")
+   public Date getRegisterDate() {
+      return registerDate;
+   }
+
+   public void setRegisterDate(Date registerDate) {
+      this.registerDate = registerDate;
+   }
+
+   
+   
 }

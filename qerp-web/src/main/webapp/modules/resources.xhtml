@@ -21,7 +21,9 @@
                         <p:outputLabel value="#{lbl['id']}" />
                         <p:outputLabel value="#{physicalRMB.resource.idPhysicalResource}" />
                         <p:outputLabel value="#{lbl['register.date']}" />
-                        <p:outputLabel value="#{physicalRMB.resource.idCompany}" />
+                        <p:outputLabel value="#{physicalRMB.resource.registerDate}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
                      </p:panelGrid>
                   </p:panelGrid>
                   <br />
@@ -51,7 +53,7 @@
                      <b:button value="#{lbl['cancel']}" dismiss="modal" />
                      <b:commandButton actionListener="#{physicalRMB.delete(physicalRMB.idResource)}"
                         value="#{lbl['delete']}"  title="#{lbl['delete']}" 
-                         update="form:panel form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" >
+                         update="form:panel form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" look="danger" >
                   </b:commandButton>
                  </f:facet>
             </b:modal>
@@ -96,19 +98,21 @@
                            <p:outputLabel value="#{lbl['id']}" />
                            <p:outputLabel value="#{item.idPhysicalResource}" />
                            <p:outputLabel value="#{lbl['register.date']}" />
-                           <p:outputLabel value="#{item.idCompany}" />
+                           <p:outputLabel value="#{item.registerDate}"  >
+                                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
+                           </p:outputLabel>
                            <p:column colspan="2" >
                            <p:panelGrid columns="3">
-                           <b:commandButton icon-awesome="search" oncomplete="$('.viewSeudoClass').modal()" update="form:features">
+                           <b:commandButton icon-awesome="search" oncomplete="$('.viewSeudoClass').modal()" update="form:features" look="info">
                               <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
                               <f:ajax />
                            </b:commandButton>
                            <b:commandButton icon-awesome="pencil" oncomplete="$('.modalToAddSeudoClass').modal()"
-                              update="form:formAdd:addPhysicalResourceDetail">
+                              update="form:formAdd:addPhysicalResourceDetail" look="primary">
                               <f:setPropertyActionListener value="#{item}" target="#{physicalRMB.resource}" />
                            </b:commandButton>
                            
-                            <b:commandButton icon-awesome="eraser" update="form:confirmDlg" oncomplete="$('.confirmSeudoClass').modal()" >
+                            <b:commandButton icon-awesome="eraser" update="form:confirmDlg" oncomplete="$('.confirmSeudoClass').modal()" look="danger">
                              <f:setPropertyActionListener  value="#{item.idPhysicalResource}" target="#{physicalRMB.idResource}" />
                              </b:commandButton>
                              </p:panelGrid>

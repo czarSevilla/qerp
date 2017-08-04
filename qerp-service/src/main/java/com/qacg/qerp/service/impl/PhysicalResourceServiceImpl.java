@@ -1,7 +1,10 @@
 package com.qacg.qerp.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -21,24 +24,20 @@ import com.qacg.qerp.service.builder.PhysicalResourceBuilder;
 @Service("physicalRService")
 public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 
-	private PhysicalResourceRepository physicalResourceRepository;
+   private PhysicalResourceRepository physicalResourceRepository;
 
-	
+   @Autowired
+   public void setPhysicalResourceRepository(PhysicalResourceRepository physicalResourceRepository) {
+      this.physicalResourceRepository = physicalResourceRepository;
+   }
 
+   @Override
+   public List<PhysicalResourceDto> findAll() {
+      List<PhysicalResource> resources = physicalResourceRepository.findAll();
+      return resources.stream().map(PhysicalResourceBuilder::build).collect(Collectors.toList());
+   }
 
-	@Autowired
-	public void setPhysicalResourceRepository(PhysicalResourceRepository physicalResourceRepository) {
-		this.physicalResourceRepository = physicalResourceRepository;
-	}
-	
-	
-	@Override
-	public List<PhysicalResourceDto> findAll() {
-		List<PhysicalResource> resources = physicalResourceRepository.findAll();
-		return resources.stream().map(PhysicalResourceBuilder::build).collect(Collectors.toList());
-	}
-
-	@Override
+   @Override
 	public void save(PhysicalResourceDto physicalDto) throws ServiceException {
 		PhysicalResource physicalResource = new PhysicalResource();
 		PhysicalResourceType type = new PhysicalResourceType();
@@ -50,6 +49,10 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 		   typeDto.setIdPhysicalResourceType(physicalResource.getpRType().getIdPhysicalResourceType());
 	        physicalDto.setpRType(typeDto);
 		}
+		else{
+               physicalDto.setRegisterDate(new Date());
+
+		}
 		physicalDto.setIdCompany(1L);
 		try {
 		   physicalResourceRepository.save(PhysicalResourceBuilder.build(physicalDto));
@@ -59,38 +62,34 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 
 	}
 
-	@Override
-	public void delete(Long idResource) throws ServiceException {
-		try {
-			physicalResourceRepository.delete(idResource);
-		} catch (DataAccessException ex) {
-			throw new ServiceException(ex.getMessage());
-			
-		}
-		
-	}
+   @Override
+   public void delete(Long idResource) throws ServiceException {
+      try {
+         physicalResourceRepository.delete(idResource);
+      } catch (DataAccessException ex) {
+         throw new ServiceException(ex.getMessage());
 
+      }
+
+   }
 
    @Override
    public List<PhysicalResourceDto> search(Long idType, String value) {
-      List<PhysicalResourceDto> data = new ArrayList<>();
-      if(!idType.toString().equals("0")){
-          if(!"0".equals(value)){
-             data = findAllByFeature(idType , value);
+      List<PhysicalResourceDto> data;
+      if (!idType.toString().equals("0")) {
+         if (!"0".equals(value)) {
+            data = findAllByFeature(idType, value);
 
-          }
-          else{
-             data = findAllByType(idType);
+         } else {
+            data = findAllByType(idType);
 
-          }
-          return data;
-       }
-       else{
-          return findAll();
-       }
-      
+         }
+         return data;
+      } else {
+         return findAll();
+      }
+
    }
-
 
    @Override
    public List<PhysicalResourceDto> findAllByType(Long idType) {
@@ -98,16 +97,16 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
       PhysicalResourceType type = new PhysicalResourceType();
       type.setIdPhysicalResourceType(idType);
       List<PhysicalResource> resources = physicalResourceRepository.findAllByPRType(type);
-  
+
       return resources.stream().map(PhysicalResourceBuilder::build).collect(Collectors.toList());
    }
-
 
    @Override
    public List<PhysicalResourceDto> findAllByFeature(Long idType, String value) {
-      List<PhysicalResource> resources =  physicalResourceRepository.findAllByFeature(idType, value);
+      List<PhysicalResource> resources = physicalResourceRepository.findAllByFeature(idType, value);
+      Set<PhysicalResource> tmp = new HashSet<>(resources);
+      resources = new ArrayList<>(tmp); 
       return resources.stream().map(PhysicalResourceBuilder::build).collect(Collectors.toList());
    }
 
-	
 }
