@@ -108,16 +108,16 @@ public class PhysicalResourceHasFeatureServiceImpl implements PhysicalResourceHa
    @Override
    public List<ResourceFeatureDto> findByID(Long idItem) {
       List<ResourceFeatureDto> featuresDto = new ArrayList<>();
-      if(idItem!=null){
-      PhysicalResourceType type = new PhysicalResourceType();
-      type.setIdPhysicalResourceType(idItem);
+      if (idItem != null) {
+         PhysicalResourceType type = new PhysicalResourceType();
+         type.setIdPhysicalResourceType(idItem);
 
-      List<ResourceFeature> features = resourceFeatureRespository.findAllByType(type);
-      for(ResourceFeature feature : features){
-           ResourceFeatureDto featureDto = new ResourceFeatureDto();
-           BeanUtils.copyProperties(feature, featureDto);
-           featuresDto.add(featureDto);
-      }
+         List<ResourceFeature> features = resourceFeatureRespository.findAllByType(type);
+         for (ResourceFeature feature : features) {
+            ResourceFeatureDto featureDto = new ResourceFeatureDto();
+            BeanUtils.copyProperties(feature, featureDto);
+            featuresDto.add(featureDto);
+         }
       }
       return featuresDto;
    }
@@ -125,17 +125,17 @@ public class PhysicalResourceHasFeatureServiceImpl implements PhysicalResourceHa
    @Override
    public List<PhysicalResourceHasFeatureDto> findByComponent(Long idComponent) {
       List<PhysicalResourceHasFeatureDto> featuresDto = new ArrayList<>();
-      if(idComponent!=null){
+      if (idComponent != null) {
          ResourceFeature resourceFeature = new ResourceFeature();
          resourceFeature.setIdResourceFeature(idComponent);
          List<PhysicalResourceHasFeature> features = featureRepository.findAllByResourceFeature(resourceFeature);
-         for(PhysicalResourceHasFeature a : features){
+         for (PhysicalResourceHasFeature a : features) {
             PhysicalResourceHasFeatureDto featureDto = new PhysicalResourceHasFeatureDto();
             BeanUtils.copyProperties(a, featureDto);
             featuresDto.add(featureDto);
-            
+
          }
-         
+
       }
       return featuresDto;
    }
@@ -143,35 +143,31 @@ public class PhysicalResourceHasFeatureServiceImpl implements PhysicalResourceHa
    @Override
    public PhysicalResourceDto compare(PhysicalResourceDto resource, PhysicalResourceDto resourceTmp) {
       PhysicalResourceDto toSend = new PhysicalResourceDto();
-      List<PhysicalResourceHasFeatureDto> aux =resource.getFeatures();
-      List<PhysicalResourceHasFeatureDto> aux2 =resourceTmp.getFeatures();  
-      if(aux.size()>=aux2.size()){
-         toSend=resource;
+      List<PhysicalResourceHasFeatureDto> aux = resource.getFeatures();
+      List<PhysicalResourceHasFeatureDto> aux2 = resourceTmp.getFeatures();
+      if (aux.size() >= aux2.size()) {
+         toSend = resource;
       }
-      
-      else if(aux.size()<aux2.size()){
-         for(int count = 0 ; count<aux2.size();count++){
-            if(count<=aux.size()-1){
-               PhysicalResourceDto tmp = new PhysicalResourceDto();
-               
-               tmp = aux2.get(count).getPhysicalResource();
+
+      else if (aux.size() < aux2.size()) {
+         for (int count = 0; count < aux2.size(); count++) {
+            if (count <= aux.size() - 1) {
+               PhysicalResourceDto tmp = aux2.get(count).getPhysicalResource();
+
                aux2.get(count).setValue(aux.get(count).getValue());
                aux2.get(count).setIdPhysicalResourceHasFeature(aux.get(count).getIdPhysicalResourceHasFeature());
                aux2.get(count).setPhysicalResource(tmp);
-            }
-            else{
+            } else {
                aux2.get(count).setValue("N/A");
-               
+
             }
          }
          toSend = resource;
-         toSend.setFeatures(aux2);  
+         toSend.setFeatures(aux2);
       }
- 
+
       return toSend;
-      
-      
-      
+
    }
 
 }
