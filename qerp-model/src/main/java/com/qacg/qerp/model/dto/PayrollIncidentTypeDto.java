@@ -12,8 +12,7 @@ public class PayrollIncidentTypeDto implements Serializable {
    private Long idPayrollIncidentType;
    private String spanishName;
    private String englishName;
-   private String spanishEffect;
-   private String englishEffect;
+   private String effect;
    
    
    public Long getIdPayrollIncidentType() {
@@ -34,18 +33,13 @@ public class PayrollIncidentTypeDto implements Serializable {
    public void setEnglishName(String englishName) {
       this.englishName = englishName;
    }
-   public String getSpanishEffect() {
-      return spanishEffect;
+   public String getEffect() {
+      return effect;
    }
-   public void setSpanishEffect(String spanishEffect) {
-      this.spanishEffect = spanishEffect;
+   public void setEffect(String effect) {
+      this.effect = effect;
    }
-   public String getEnglishEffect() {
-      return englishEffect;
-   }
-   public void setEnglishEffect(String englishEffect) {
-      this.englishEffect = englishEffect;
-   }
+
    
    
 }

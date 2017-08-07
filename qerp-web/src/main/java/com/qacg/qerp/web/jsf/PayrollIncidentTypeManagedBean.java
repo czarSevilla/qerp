@@ -93,10 +93,12 @@ public class PayrollIncidentTypeManagedBean {
    public void save() {
 
       FacesContext ctx = FacesContext.getCurrentInstance();
+
       try {
          payrollService.save(payrollDto);
          incidents = payrollService.findAll();
          ctx.addMessage(null, MessageUtils.success(ctx, SUCCESS));
+         
       } catch (ServiceException se) {
          ctx.addMessage(null, MessageUtils.error(ctx, se.getMessage()));
       }

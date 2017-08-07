@@ -5,9 +5,9 @@
 <h:head>
    <title>#{lbl['header.title']}</title>
 </h:head>
-<!-- Add 50px padding top to the body for the navbar -->
+
 <h:body style="padding-top: 50px; padding-bottom: 20px;">
-   <ui:composition template="../layout/commonLayout.xhtml">
+   <ui:composition template="../../layout/commonLayout.xhtml">
       <ui:define name="content">
          <b:form id="general">
             <ui:include src="addPayroll.xhtml"></ui:include>
@@ -52,17 +52,12 @@
                         <h:outputLabel value="#{lbl['name.en']}" />
                      </f:facet>
                   </b:dataTableColumn>
-                  <b:dataTableColumn value="#{item.spanishEffect}">
+                  <b:dataTableColumn value="#{item.effect}">
                      <f:facet name="header">
-                        <h:outputLabel value="#{lbl['effect.es']}" />
+                        <h:outputLabel value="#{lbl['effect']}" />
                      </f:facet>
                   </b:dataTableColumn>
 
-                  <b:dataTableColumn value="#{item.englishEffect}">
-                     <f:facet name="header">
-                        <h:outputLabel value="#{lbl['effect.en']}" />
-                     </f:facet>
-                  </b:dataTableColumn>
                   <b:dataTableColumn>
                      <f:facet name="header">
                         <h:outputLabel value="" />

@@ -22,8 +22,7 @@ public class PayrollIncidentType implements Serializable {
    private Long idPayrollIncidentType;
    private String spanishName;
    private String englishName;
-   private String spanishEffect;
-   private String englishEffect;
+   private String effect;
    
    
    @Id
@@ -52,21 +51,17 @@ public class PayrollIncidentType implements Serializable {
       this.englishName = englishName;
    }
    
-   @Column(name = "spanish_effect", nullable = false)
-   public String getSpanishEffect() {
-      return spanishEffect;
+   @Column(name = "effect", nullable = false)
+   public String getEffect() {
+      return effect;
    }
-   public void setSpanishEffect(String spanishEffect) {
-      this.spanishEffect = spanishEffect;
+   public void setEffect(String effect) {
+      this.effect = effect;
    }
+
+
    
-   @Column(name = "english_effect", nullable = false)
-   public String getEnglishEffect() {
-      return englishEffect;
-   }
-   public void setEnglishEffect(String englishEffect) {
-      this.englishEffect = englishEffect;
-   }
+
    
    
 }

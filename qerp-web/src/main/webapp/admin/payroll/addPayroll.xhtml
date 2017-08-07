@@ -6,9 +6,9 @@
    <title></title>
 </h:head>
 <h:body>
-   <ui:composition>
+   <ui:composition >
       <b:modal close-on-escape="false" backdrop="false"
-         title="#{not empty payrollMB.payrollDto and not empty payrollMB.payrollDto.idPayrollIncidentType ? lbl['edit'] : lbl['create']}"
+         title="#{lbl['create']}"
          styleClass="modalSeudoClass">
          <p:outputPanel id="addPayRoll">
             <p:outputPanel rendered="#{not empty payrollMB.payrollDto}">
@@ -17,17 +17,12 @@
                <b:inputText label="#{lbl['name.es']}" value="#{payrollMB.payrollDto.spanishName}"></b:inputText>
                <b:inputText label="#{lbl['name.en']}" value="#{payrollMB.payrollDto.englishName}"></b:inputText>
 
-               <b:selectOneMenu value="#{payrollMB.payrollDto.spanishEffect}" required="true" label="#{lbl['effect.es']}">
+               <b:selectOneMenu value="#{payrollMB.payrollDto.effect}" required="true" label="#{lbl['effect']}">
                   <f:selectItem itemLabel="#{lbl['select']}" itemValue="" />
-                  <f:selectItem itemLabel="Positivo" itemValue="Positivo" />
-                  <f:selectItem itemLabel="Negativo" itemValue="Negativo" />
+                  <f:selectItem itemLabel="+" itemValue="+" />
+                  <f:selectItem itemLabel="-" itemValue="-" />
                </b:selectOneMenu>
 
-               <b:selectOneMenu value="#{payrollMB.payrollDto.englishEffect}" required="true" label="#{lbl['effect.en']}">
-                  <f:selectItem itemLabel="#{lbl['select']}" itemValue="" />
-                  <f:selectItem itemLabel="Positive" itemValue="Positive" />
-                  <f:selectItem itemLabel="Negative" itemValue="Negative" />
-               </b:selectOneMenu>
 
             </p:outputPanel>
          </p:outputPanel>
