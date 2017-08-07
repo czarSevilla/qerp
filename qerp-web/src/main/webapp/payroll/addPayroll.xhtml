@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:b="http://bootsfaces.net/ui"
+   xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+   <title></title>
+</h:head>
+<h:body>
+   <ui:composition>
+      <b:modal close-on-escape="false" backdrop="false"
+         title="#{not empty payrollMB.payrollDto and not empty payrollMB.payrollDto.idPayrollIncidentType ? lbl['edit'] : lbl['create']}"
+         styleClass="modalSeudoClass">
+         <p:outputPanel id="addPayRoll">
+            <p:outputPanel rendered="#{not empty payrollMB.payrollDto}">
+
+
+               <b:inputText label="#{lbl['name.es']}" value="#{payrollMB.payrollDto.spanishName}"></b:inputText>
+               <b:inputText label="#{lbl['name.en']}" value="#{payrollMB.payrollDto.englishName}"></b:inputText>
+
+               <b:selectOneMenu value="#{payrollMB.payrollDto.spanishEffect}" required="true" label="#{lbl['effect.es']}">
+                  <f:selectItem itemLabel="#{lbl['select']}" itemValue="" />
+                  <f:selectItem itemLabel="Positivo" itemValue="Positivo" />
+                  <f:selectItem itemLabel="Negativo" itemValue="Negativo" />
+               </b:selectOneMenu>
+
+               <b:selectOneMenu value="#{payrollMB.payrollDto.englishEffect}" required="true" label="#{lbl['effect.en']}">
+                  <f:selectItem itemLabel="#{lbl['select']}" itemValue="" />
+                  <f:selectItem itemLabel="Positive" itemValue="Positive" />
+                  <f:selectItem itemLabel="Negative" itemValue="Negative" />
+               </b:selectOneMenu>
+
+            </p:outputPanel>
+         </p:outputPanel>
+         <f:facet name="footer">
+            <b:button value="#{lbl['cancel']}" dismiss="modal" />
+            <b:commandButton value="#{lbl['create']}" look="primary" actionListener="#{payrollMB.save}" update="general:items-list,general:growMsg"
+               oncomplete="$('.modalSeudoClass').modal('hide')" />
+         </f:facet>
+      </b:modal>
+   </ui:composition>
+</h:body>
+</html>
