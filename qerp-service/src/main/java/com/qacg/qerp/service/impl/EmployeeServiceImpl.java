@@ -40,7 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             jobTitle.setIdJobTitle(employee.getJobTitle().getIdJobTitle());
             jobTitle.setTitleEnUs(employee.getJobTitle().getTitleEnUs());
             jobTitle.setTitleEsMx(employee.getJobTitle().getTitleEsMx());
-            emp.setJobTitle(jobTitle);
+            emp.setJobTitleDto(jobTitle);
             emp.setLastName(employee.getLastName());
             emp.setName(employee.getName());
             emp.setNumberEmployee(employee.getNumberEmployee());
@@ -65,4 +65,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 	}
 
+   @Override
+   public void delete(Long id) throws ServiceException {
+      // TODO Auto-generated method stub
+      
+   }
 }

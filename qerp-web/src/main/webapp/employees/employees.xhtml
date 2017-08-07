@@ -15,13 +15,13 @@
 		<ui:define name="content">
 			<b:form id="form">
 				<b:container fluid="true">
-				
 					<b:growl id="growMsg" globalOnly="true" placementFrom="top" showDetail="true" 
 					showSummary="true" allowDismiss="true" delay="10000" escape="false" />
 
-					<b:button style="margin:20px 0;" icon-awesome="plus"
+					<b:commandButton style="margin:20px 0;" icon-awesome="plus" actionListener="#{employeeMB.create}"
 						look="primary" value="#{lbl['create']}" title="#{lbl['create']}"
-						size="md" outcome="addEmployee.xhtml"/>
+						size="md" action="addEmployee.xhtml" >
+					</b:commandButton>
 						
 					<b:dataTable id="list-items" var="emp" value="#{employeeMB.employees}">
 						<b:dataTableColumn>
@@ -46,7 +46,7 @@
 								<h:outputLabel value="#{lbl['last.name']}" />
 							</f:facet>
 						</b:dataTableColumn>
-						<b:dataTableColumn value="#{appMB.localize(emp.jobTitle, 'title')}">
+						<b:dataTableColumn value="#{appMB.localize(emp.jobTitleDto, 'title')}">
 							<f:facet name="header">
 								<h:outputLabel value="#{lbl['job.title']}" />
 							</f:facet>

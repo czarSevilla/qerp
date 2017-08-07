@@ -12,10 +12,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "job_title")
 public class JobTitle implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private Long idJobTitle;

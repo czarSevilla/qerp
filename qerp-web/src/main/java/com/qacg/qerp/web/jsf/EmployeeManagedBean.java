@@ -10,33 +10,51 @@ import javax.faces.view.ViewScoped;
 
 import com.qacg.qerp.exception.ServiceException;
 import com.qacg.qerp.model.dto.EmployeeDto;
+import com.qacg.qerp.model.dto.GenderDto;
 import com.qacg.qerp.model.dto.JobTitleDto;
+import com.qacg.qerp.model.dto.MaritalStatusDto;
+import com.qacg.qerp.model.dto.NationalityDto;
 import com.qacg.qerp.service.EmployeeService;
+import com.qacg.qerp.service.GenderService;
 import com.qacg.qerp.service.JobTitleService;
+import com.qacg.qerp.service.MaritalStatusService;
+import com.qacg.qerp.service.NationalityService;
 import com.qacg.qerp.web.util.MessageUtils;
 
 @ManagedBean(name = "employeeMB")
 @ViewScoped
-public class EmployeeManagedBean {
-
+public class EmployeeManagedBean{
+     private List<JobTitleDto> jobTitles;
 	private List<EmployeeDto> employees;
+	private List<MaritalStatusDto> maritalStatus;
+	private List<GenderDto> genders;
+	private List<NationalityDto> nationalities;
+	private JobTitleDto jobTitle;
+	private NationalityDto nationality;
+	private GenderDto gender;
+	private MaritalStatusDto maritalStatu; 
+	private String actionTitle;
+     private EmployeeDto employee;
 
 	@ManagedProperty("#{employeeService}")
 	private EmployeeService employeeService;
-	
 	@ManagedProperty("#{jobTitleService}")
 	private JobTitleService jobTitleService;
-
-	private String actionTitle;
+	@ManagedProperty("#{maritalStatusService}")
+	private MaritalStatusService maritalStatusService;
+	@ManagedProperty("#{genderService}")
+	private GenderService genderService;
+	@ManagedProperty("#{nationalityService}")
+	private NationalityService nationalityService;
 	
-	private EmployeeDto employee;
-	
-	private List<JobTitleDto> jobTitles;
 
 	@PostConstruct
 	public void init() {
 		employees = employeeService.findAll();
 		jobTitles = jobTitleService.findAll();
+		//genders = genderService.findAll();
+		//maritalStatus = maritalStatusService.findAll();
+		//nationalities = nationalityService.findAll();
 	}
 	
 	public void save() {
@@ -52,7 +70,12 @@ public class EmployeeManagedBean {
 	
 	public void create() {
 		employee = new EmployeeDto();
-		employee.setJobTitle(new JobTitleDto());
+		jobTitle = new JobTitleDto();
+		gender = new GenderDto();
+		nationality = new NationalityDto();
+		maritalStatu =new MaritalStatusDto();
+		employee.setJobTitleDto(jobTitle);
+		employee.setMaritalStatus(maritalStatu);
 	}
 
 	public List<EmployeeDto> getEmployees() {
@@ -103,4 +126,91 @@ public class EmployeeManagedBean {
 		this.jobTitleService = jobTitleService;
 	}
 
+     public JobTitleDto getJobTitleDto() {
+        return jobTitle;
+     }
+
+     public void setJobTitleDto(JobTitleDto jobTitle) {
+        this.jobTitle = jobTitle;
+     }
+
+     public final List<MaritalStatusDto> getMaritalStatus() {
+         return maritalStatus;
+     }
+   
+     public final void setMaritalStatus(List<MaritalStatusDto> maritalStatus) {
+         this.maritalStatus = maritalStatus;
+     }
+   
+     public final List<GenderDto> getGenders() {
+         return genders;
+     }
+   
+     public final void setGenders(List<GenderDto> genders) {
+         this.genders = genders;
+     }
+
+     public final List<NationalityDto> getNationalities() {
+         return nationalities;
+     }
+
+     public final void setNationalities(List<NationalityDto> nationalities) {
+         this.nationalities = nationalities;
+     }
+
+     public final JobTitleDto getJobTitle() {
+         return jobTitle;
+     }
+
+     public final void setJobTitle(JobTitleDto jobTitle) {
+         this.jobTitle = jobTitle;
+     }
+
+     public final NationalityDto getNationality() {
+         return nationality;
+     }
+
+     public final void setNationality(NationalityDto nationality) {
+         this.nationality = nationality;
+     }
+
+     public final GenderDto getGender() {
+         return gender;
+     }
+
+     public final void setGender(GenderDto gender) {
+         this.gender = gender;
+     }
+
+     public final MaritalStatusDto getMaritalStatu() {
+         return maritalStatu;
+     }
+
+     public final void setMaritalStatu(MaritalStatusDto maritalStatu) {
+         this.maritalStatu = maritalStatu;
+     }
+
+     public final MaritalStatusService getMaritalStatusService() {
+         return maritalStatusService;
+     }
+
+     public final void setMaritalStatusService(MaritalStatusService maritalStatusService) {
+         this.maritalStatusService = maritalStatusService;
+     }
+
+     public final GenderService getGenderService() {
+         return genderService;
+     }
+
+     public final void setGenderService(GenderService genderService) {
+         this.genderService = genderService;
+     }
+
+     public final NationalityService getNationalityService() {
+         return nationalityService;
+     }
+
+     public final void setNationalityService(NationalityService nationalityService) {
+         this.nationalityService = nationalityService;
+     }
 }

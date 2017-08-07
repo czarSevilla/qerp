@@ -3,9 +3,6 @@ package com.qacg.qerp.model.dto;
 import java.io.Serializable;
 
 public class JobTitleDto implements Serializable {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
     private Long idJobTitle;
     private String titleEsMx;
