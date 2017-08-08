@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:b="http://bootsfaces.net/ui"
+   xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+   <title>#{lbl['header.title']}</title>
+</h:head>
+
+<h:body style="padding-top: 50px; padding-bottom: 20px;">
+   <ui:composition template="../layout/commonLayout.xhtml">
+      <ui:define name="content">
+         <h:form>
+            <b:tabView pills="true"  contentStyle="border: 1px solid #222222;padding:10px;">
+               <b:tab title="#{lbl['month']}" >
+                  <ui:include src="month.xhtml"/>
+               </b:tab>
+               <b:tab title="#{lbl['biweekly']}">
+                  <ui:include src="biweekly.xhtml"/>
+               </b:tab>
+               <b:tab title="#{lbl['personal']}">
+
+               </b:tab>
+            </b:tabView>
+
+         </h:form>
+      </ui:define>
+   </ui:composition>
+</h:body>
+</html>
