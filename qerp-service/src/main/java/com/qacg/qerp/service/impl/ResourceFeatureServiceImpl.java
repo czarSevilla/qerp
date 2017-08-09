@@ -2,6 +2,7 @@ package com.qacg.qerp.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import com.qacg.qerp.persistence.entity.PhysicalResourceType;
 import com.qacg.qerp.persistence.entity.ResourceFeature;
 import com.qacg.qerp.persistence.repository.ResourceFeatureRepository;
 import com.qacg.qerp.service.ResourceFeatureService;
+import com.qacg.qerp.service.builder.ResourceFeatureBuilder;
 
 @Service("resourceFeatureService")
 public class ResourceFeatureServiceImpl implements ResourceFeatureService {
@@ -30,31 +32,15 @@ public class ResourceFeatureServiceImpl implements ResourceFeatureService {
    @Override
    public List<ResourceFeatureDto> findAll() {
       List<ResourceFeature> features = resourceFeatureRepository.findAll();
-      List<ResourceFeatureDto> featuresDto = new ArrayList<>();
-      for (ResourceFeature feature : features) {
-         ResourceFeatureDto featureDto = new ResourceFeatureDto();
-         PhysicalResourceTypeDto typeDto = new PhysicalResourceTypeDto();
-         BeanUtils.copyProperties(feature.getType(), typeDto);
-         featureDto.setIdResourceFeature(feature.getIdResourceFeature());
-         featureDto.setFeatureEnUs(feature.getFeatureEnUs());
-         featureDto.setFeatureEsMx(feature.getFeatureEsMx());
-         featureDto.setType(typeDto);
-         featuresDto.add(featureDto);
-      }
-      return featuresDto;
+
+      return features.stream().map(ResourceFeatureBuilder::build).collect(Collectors.toList());
    }
 
    @Override
    public void save(ResourceFeatureDto resourceFeatureDto) throws ServiceException {
-      ResourceFeature feature = new ResourceFeature();
-      PhysicalResourceType type = new PhysicalResourceType();
-      feature.setIdResourceFeature(resourceFeatureDto.getIdResourceFeature());
-      feature.setFeatureEnUs(resourceFeatureDto.getFeatureEnUs());
-      feature.setFeatureEsMx(resourceFeatureDto.getFeatureEsMx());
-      BeanUtils.copyProperties(resourceFeatureDto.getType(), type);
-      feature.setType(type);
+
       try {
-         resourceFeatureRepository.save(feature);
+         resourceFeatureRepository.save(ResourceFeatureBuilder.build(resourceFeatureDto));
       } catch (Exception ex) {
          throw new ServiceException(ex.getMessage());
       }
@@ -72,15 +58,7 @@ public class ResourceFeatureServiceImpl implements ResourceFeatureService {
    @Override
    public ResourceFeatureDto findOne(Long idResourceFeature) throws ServiceException {
       ResourceFeature feature = resourceFeatureRepository.findOne(idResourceFeature);
-      ResourceFeatureDto featureDto = new ResourceFeatureDto();
-      PhysicalResourceTypeDto typeDto = new PhysicalResourceTypeDto();
-      BeanUtils.copyProperties(feature.getType(), typeDto);
-      featureDto.setType(typeDto);
-      featureDto.setIdResourceFeature(idResourceFeature);
-      featureDto.setFeatureEnUs(feature.getFeatureEnUs());
-      featureDto.setFeatureEsMx(feature.getFeatureEsMx());
-
-      return featureDto;
+      return ResourceFeatureBuilder.build(feature);
    }
 
    @Override
