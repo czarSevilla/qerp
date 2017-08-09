@@ -20,6 +20,7 @@ import com.qacg.qerp.model.dto.LanguageDto;
 import com.qacg.qerp.model.dto.MaritalStatusDto;
 import com.qacg.qerp.model.dto.NationalityDto;
 import com.qacg.qerp.model.dto.PayrollIncidentTypeDto;
+import com.qacg.qerp.model.dto.PhysicalResourceDto;
 import com.qacg.qerp.model.dto.PhysicalResourceHasFeatureDto;
 import com.qacg.qerp.model.dto.PhysicalResourceTypeDto;
 import com.qacg.qerp.model.dto.ResourceFeatureDto;
@@ -211,5 +212,10 @@ public class ModelTest {
 
       tester.verify();
    }
+   @Test
+   public void physicalResourceTest() {
+      DtoTester<PhysicalResourceDto> tester = new DtoTester<>(PhysicalResourceDto.class, BoolGetter.IS);
 
+      tester.verify();
+   }
 }
