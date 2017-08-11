@@ -4,11 +4,9 @@ import org.springframework.beans.BeanUtils;
 
 import com.qacg.qerp.model.dto.PhysicalResourceDto;
 import com.qacg.qerp.model.dto.PhysicalResourceHasFeatureDto;
-import com.qacg.qerp.model.dto.PhysicalResourceTypeDto;
 import com.qacg.qerp.model.dto.ResourceFeatureDto;
 import com.qacg.qerp.persistence.entity.PhysicalResource;
 import com.qacg.qerp.persistence.entity.PhysicalResourceHasFeature;
-import com.qacg.qerp.persistence.entity.PhysicalResourceType;
 import com.qacg.qerp.persistence.entity.ResourceFeature;
 
 public class PhysicalResourceHasFeatureBuilder {
