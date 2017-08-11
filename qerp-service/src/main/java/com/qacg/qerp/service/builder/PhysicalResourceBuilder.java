@@ -31,8 +31,11 @@ public class PhysicalResourceBuilder {
      for(PhysicalResourceHasFeature a : resource.getFeatures()){
         PhysicalResourceHasFeatureDto featureDto = new PhysicalResourceHasFeatureDto();
         ResourceFeatureDto resourceFeatureDto = new ResourceFeatureDto();
+        //PhysicalResourceDto pRDto =  new PhysicalResourceDto();//
         BeanUtils.copyProperties(a.getResourceFeature(), resourceFeatureDto);
         BeanUtils.copyProperties(a, featureDto);
+        //BeanUtils.copyProperties(a.getPhysicalResource(), pRDto);//
+        //featureDto.setPhysicalResource(pRDto);//
         featureDto.setPhysicalResource(resourceDto);
         featureDto.setResourceFeature(resourceFeatureDto);
         featuresDto.add(featureDto);
@@ -47,20 +50,23 @@ public class PhysicalResourceBuilder {
      PhysicalResourceType type = new PhysicalResourceType();
      List<PhysicalResourceHasFeature> features = new ArrayList<>();
      BeanUtils.copyProperties(resourceDto.getpRType(), type);
+     resource.setpRType(type);
      BeanUtils.copyProperties(resourceDto, resource);
-     
      for(PhysicalResourceHasFeatureDto a : resourceDto.getFeatures()){
         PhysicalResourceHasFeature feature = new PhysicalResourceHasFeature();
+        //PhysicalResource pResource =  new PhysicalResource();//
         ResourceFeature resourceFeature = new ResourceFeature();
         BeanUtils.copyProperties(a.getResourceFeature(), resourceFeature);
-        System.out.println("valor "+ a.getResourceFeature().getIdResourceFeature());
         BeanUtils.copyProperties(a, feature);
+        //BeanUtils.copyProperties(a.getPhysicalResource(), pResource);//
+        //feature.setPhysicalResource(pResource);//
         feature.setResourceFeature(resourceFeature);
         feature.setPhysicalResource(resource);
         features.add(feature);
      }
+
      resource.setFeatures(features);
-     resource.setpRType(type);
+ 
      return resource;
   }
 }

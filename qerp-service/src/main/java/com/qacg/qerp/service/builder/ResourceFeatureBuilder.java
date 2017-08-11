@@ -24,6 +24,7 @@ public class ResourceFeatureBuilder {
    }
 
    
+   
    public static final ResourceFeature build(ResourceFeatureDto resourceDto){
       ResourceFeature resource = new ResourceFeature();
       PhysicalResourceType type = new PhysicalResourceType();

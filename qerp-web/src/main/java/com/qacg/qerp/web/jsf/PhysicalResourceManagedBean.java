@@ -219,7 +219,7 @@ public class PhysicalResourceManagedBean {
       
       if(!typeComponent.toString().equals("0")){
          value = null;
-      values = featureService.findByComponent(typeComponent);
+         values = featureService.findByComponent(typeComponent);
       }
       else{
          values = new ArrayList<>();
@@ -233,6 +233,7 @@ public class PhysicalResourceManagedBean {
    public void create() {
       try {
          resource = resourceFeatureService.findAllById(idType);
+         idType = null;
       } catch (ServiceException e) {
          LOG.error("Error at Create Method", e);
       }

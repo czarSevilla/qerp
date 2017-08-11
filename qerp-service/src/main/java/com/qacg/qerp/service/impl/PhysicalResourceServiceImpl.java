@@ -39,6 +39,7 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 
    @Override
 	public void save(PhysicalResourceDto physicalDto) throws ServiceException {
+         PhysicalResource p = new PhysicalResource();
 		PhysicalResource physicalResource = new PhysicalResource();
 		PhysicalResourceType type = new PhysicalResourceType();
 		PhysicalResourceTypeDto typeDto = new PhysicalResourceTypeDto();
@@ -47,7 +48,7 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 		if(null==physicalDto.getpRType().getIdPhysicalResourceType()){
 		   physicalResource = physicalResourceRepository.findOne(idType);
 		   typeDto.setIdPhysicalResourceType(physicalResource.getpRType().getIdPhysicalResourceType());
-	        physicalDto.setpRType(typeDto);
+		   physicalDto.setpRType(typeDto);
 		}
 		else{
                physicalDto.setRegisterDate(new Date());
@@ -55,7 +56,8 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
 		}
 		physicalDto.setIdCompany(1L);
 		try {
-		   physicalResourceRepository.save(PhysicalResourceBuilder.build(physicalDto));
+		   p = PhysicalResourceBuilder.build(physicalDto);
+		   physicalResourceRepository.save(p);
 		} catch (DataAccessException ex) {
 			throw new ServiceException(ex.getMessage());
 		}

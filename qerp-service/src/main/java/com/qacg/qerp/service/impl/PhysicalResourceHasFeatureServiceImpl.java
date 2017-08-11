@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,6 @@ import com.qacg.qerp.exception.ServiceException;
 import com.qacg.qerp.model.dto.PhysicalResourceDto;
 import com.qacg.qerp.model.dto.PhysicalResourceHasFeatureDto;
 import com.qacg.qerp.model.dto.ResourceFeatureDto;
-import com.qacg.qerp.persistence.entity.PhysicalResource;
 import com.qacg.qerp.persistence.entity.PhysicalResourceHasFeature;
 import com.qacg.qerp.persistence.entity.PhysicalResourceType;
 import com.qacg.qerp.persistence.entity.ResourceFeature;
@@ -85,16 +83,25 @@ public class PhysicalResourceHasFeatureServiceImpl implements PhysicalResourceHa
 
    @Override
    public List<PhysicalResourceHasFeatureDto> findByComponent(Long idComponent) {
+      System.out.println("SERVICIO DE BUSQUEDA");
+      
       List<PhysicalResourceHasFeatureDto> featuresDto = new ArrayList<>();
       if (idComponent != null) {
          ResourceFeature resourceFeature = new ResourceFeature();
          resourceFeature.setIdResourceFeature(idComponent);
          List<PhysicalResourceHasFeature> features = featureRepository.findAllByResourceFeature(resourceFeature);
-         featuresDto = features.stream().map(PhysicalResourceHasFeatureBuilder::build).collect(Collectors.toList());
+         int size = features.size();
+         for(int count = 0; count<size-1;count++){
+            PhysicalResourceHasFeatureDto featureDto = new PhysicalResourceHasFeatureDto();
+            featureDto.setValue(features.get(count).getValue());
+            featuresDto.add(featureDto);         
+         }
+         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+featuresDto.size());
       }
       return featuresDto;
    }
 
+   
    @Override
    public PhysicalResourceDto compare(PhysicalResourceDto resource, PhysicalResourceDto resourceTmp) {
       PhysicalResourceDto toSend = new PhysicalResourceDto();
