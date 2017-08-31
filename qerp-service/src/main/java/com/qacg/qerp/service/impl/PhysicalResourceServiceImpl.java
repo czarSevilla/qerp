@@ -79,7 +79,7 @@ public class PhysicalResourceServiceImpl implements PhysicalResourceService {
    public List<PhysicalResourceDto> search(Long idType, String value) {
       List<PhysicalResourceDto> data;
       if (!idType.toString().equals("0")) {
-         if (!"0".equals(value)) {
+         if (null != value) {
             data = findAllByFeature(idType, value);
 
          } else {

@@ -16,13 +16,15 @@
                   </f:facet>
                </b:dataTableColumn>
                <b:dataTableColumn>
-                  <b:inputText value="#{feature.value}"/>
+                  <b:inputText value="#{feature.value}">
+                  <f:ajax />
+                  </b:inputText>
                   <f:facet name="header">
                      <h:outputLabel value="#{lbl['value']}" />
                   </f:facet>
                </b:dataTableColumn>
             </b:dataTable>
-            <b:commandButton value="#{lbl['create']}" look="primary" actionListener="#{physicalRMB.save}"
+            <b:commandButton value="#{lbl['create']}" look="primary" process="@this" actionListener="#{physicalRMB.save}"
                update="form:panel,form:growMsg" oncomplete="$('.modalToAddSeudoClass').modal('hide')" />
 
          

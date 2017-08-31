@@ -53,7 +53,7 @@
                      <b:button value="#{lbl['cancel']}" dismiss="modal" />
                      <b:commandButton actionListener="#{physicalRMB.delete(physicalRMB.idResource)}"
                         value="#{lbl['delete']}"  title="#{lbl['delete']}" 
-                         update="form:panel form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" look="danger" >
+                         update="form:panel form:growMsg" oncomplete="$('.confirmSeudoClass').modal('hide')" look="danger" process="@this" >
                   </b:commandButton>
                  </f:facet>
             </b:modal>
@@ -109,11 +109,11 @@
                            </b:commandButton>
                            
                            <b:commandButton icon-awesome="pencil" oncomplete="$('.modalToAddSeudoClass').modal()"
-                              update="form:formAdd:addPhysicalResourceDetail" look="primary" actionListener="#{physicalRMB.edit(item.idPhysicalResource)}"  >
+                              update="form:formAdd:addPhysicalResourceDetail" process="@this" look="primary" actionListener="#{physicalRMB.edit(item.idPhysicalResource)}"  >
 
                            </b:commandButton>
                            
-                            <b:commandButton icon-awesome="eraser" update="form:confirmDlg" oncomplete="$('.confirmSeudoClass').modal()" look="danger">
+                            <b:commandButton icon-awesome="eraser" process="@this" update="form:confirmDlg" oncomplete="$('.confirmSeudoClass').modal()" look="danger">
                              <f:setPropertyActionListener  value="#{item.idPhysicalResource}" target="#{physicalRMB.idResource}" />
                              </b:commandButton>
                              </p:panelGrid>

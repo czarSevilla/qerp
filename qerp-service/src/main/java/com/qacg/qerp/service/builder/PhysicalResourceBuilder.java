@@ -54,12 +54,12 @@ public class PhysicalResourceBuilder {
      BeanUtils.copyProperties(resourceDto, resource);
      for(PhysicalResourceHasFeatureDto a : resourceDto.getFeatures()){
         PhysicalResourceHasFeature feature = new PhysicalResourceHasFeature();
-        //PhysicalResource pResource =  new PhysicalResource();//
+    //    PhysicalResource pResource =  new PhysicalResource();//
         ResourceFeature resourceFeature = new ResourceFeature();
         BeanUtils.copyProperties(a.getResourceFeature(), resourceFeature);
         BeanUtils.copyProperties(a, feature);
-        //BeanUtils.copyProperties(a.getPhysicalResource(), pResource);//
-        //feature.setPhysicalResource(pResource);//
+  //      BeanUtils.copyProperties(a.getPhysicalResource(), pResource);//
+//        feature.setPhysicalResource(pResource);//
         feature.setResourceFeature(resourceFeature);
         feature.setPhysicalResource(resource);
         features.add(feature);

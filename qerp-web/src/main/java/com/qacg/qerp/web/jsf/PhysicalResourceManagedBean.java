@@ -203,30 +203,40 @@ public class PhysicalResourceManagedBean {
 
    
    public void getTypeResource() {
-      if(!typeItem.toString().equals("0")){
       typeComponent = null;
       value = null;
+      if(!typeItem.toString().equals("0")){
+
       features = featureService.findByID(typeItem);
       }
       else{
 
          features = new ArrayList<>();
          values = new ArrayList<>();
+         //typeComponent = null;
+         //value = null;
       }
    }
 
    public void getComponentValue() {
-      
+      System.out.println("-----------------------------------------************************----------------- "+typeComponent);
+      value = null;
       if(!typeComponent.toString().equals("0")){
-         value = null;
+         //value = null;
          values = featureService.findByComponent(typeComponent);
       }
       else{
          values = new ArrayList<>();
+         //value = null;
       }
       }
-
+   
+   public void prueba(){
+      System.out.println("############################################################################################## "+value);
+   }
+   
    public void search(){
+      System.out.println("++++++++++++++++++++++++++++++++++++VALORES+++++++++++++++++++++++++++++++++++++++ "+typeItem+"   "+value);
       resources = pService.search(typeItem, value);
    }
    
@@ -244,6 +254,7 @@ public class PhysicalResourceManagedBean {
          try{
          resourceTmp = pService.findOne(id);
          resource = featureService.compare(resourceTmp,resourceFeatureService.findAllById(resourceTmp.getpRType().getIdPhysicalResourceType()));
+         System.out.println("asd"+resource);
          }catch(ServiceException se) {
             LOG.error("It could not be modified try to do later",se);
          }
@@ -279,6 +290,7 @@ public class PhysicalResourceManagedBean {
    public void delete(Long idResource) {
       FacesContext ctx = FacesContext.getCurrentInstance();
       try {
+         System.out.println(""+idResource);
          pService.delete(idResource);
          resources = pService.findAll();
          ctx.addMessage(null, MessageUtils.success(ctx, SUCCESS));

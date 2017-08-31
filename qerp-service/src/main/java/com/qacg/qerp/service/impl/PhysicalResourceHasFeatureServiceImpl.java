@@ -91,7 +91,7 @@ public class PhysicalResourceHasFeatureServiceImpl implements PhysicalResourceHa
          resourceFeature.setIdResourceFeature(idComponent);
          List<PhysicalResourceHasFeature> features = featureRepository.findAllByResourceFeature(resourceFeature);
          int size = features.size();
-         for(int count = 0; count<size-1;count++){
+         for(int count = 0; count<size;count++){
             PhysicalResourceHasFeatureDto featureDto = new PhysicalResourceHasFeatureDto();
             featureDto.setValue(features.get(count).getValue());
             featuresDto.add(featureDto);         

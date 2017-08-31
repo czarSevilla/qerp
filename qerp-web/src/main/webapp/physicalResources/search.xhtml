@@ -22,8 +22,9 @@
             <b:selectOneMenu value="#{physicalRMB.value}" id="valueCombo">
                <f:selectItem itemLabel="#{lbl['select']}" itemValue="0" />
                <f:selectItems value="#{physicalRMB.values}" var="typeV" itemLabel="#{typeV.value}" itemValue="#{typeV.value}" />
+               <f:ajax listener="#{physicalRMB.prueba}" />
             </b:selectOneMenu>
-            <b:commandButton value="#{lbl['search']}" style="margin:20px 0;" icon-awesome="plus"  size="md" look="primary" actionListener="#{physicalRMB.search}" update="form:panel"/>
+            <b:commandButton value="#{lbl['search']}" style="margin:20px 0;" icon-awesome="search"  size="md" look="primary" actionListener="#{physicalRMB.search}" process="@this" update="form:panel"/>
          </p:panelGrid>
 
       </p:outputPanel>
